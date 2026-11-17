@@ -1,216 +1,75 @@
-<!DOCTYPE html>
-<html lang="si">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GameVerse - Venura</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+<!doctype html><html lang="si"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020"><title>GameVerse SL</title><style>
+:root{--bg:#0b1020;--card:#141e31;--line:#26344b;--g:#20d6a0;--muted:#9aa8bd}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f7fb;font-family:Arial,sans-serif}main{max-width:1000px;margin:auto;padding:18px 16px 90px}header,.head{display:flex;justify-content:space-between;align-items:center;gap:10px}header{border-bottom:1px solid var(--line);padding:8px 0 18px}.logo{font-size:25px;font-weight:900;color:var(--g)}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:bold}.dark{background:var(--card);color:white;border:1px solid var(--line)}.green{background:var(--g);color:#061710}.hero{position:relative;margin:20px 0;border-radius:20px;overflow:hidden}.hero img{width:100%;height:280px;object-fit:cover;opacity:.55}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#080e1ded,transparent)}.heroText{position:absolute;z-index:1;bottom:20px;left:20px;right:18px}.hero h1{font-size:clamp(23px,5vw,37px);margin:12px 0}.muted,.hero p{color:var(--muted);line-height:1.6}.tag{display:inline-block;background:#123b39;color:var(--g);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:bold}.search{display:flex;gap:8px;margin:18px 0}.search input,.field input,.field textarea,.field select{width:100%;padding:13px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:white}.head{margin:25px 0 13px}.head h2{font-size:19px;margin:0}.read{background:none;color:var(--g);padding:0}.filters{display:flex;gap:8px;overflow:auto;margin-bottom:14px}.filter{white-space:nowrap;background:var(--card);color:var(--muted);border:1px solid var(--line)}.filter.active{color:var(--g);border-color:var(--g)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.news,.game,.event,.music{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden}.news img{width:100%;height:145px;object-fit:cover}.body{padding:13px}.body h3{font-size:15px;line-height:1.4;margin:10px 0 7px}.body p{font-size:13px;color:var(--muted);line-height:1.5}.games{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.game{text-align:center;padding:14px 5px}.game b{display:block;margin-top:7px;font-size:13px}.events{display:grid;gap:10px}.event{padding:14px;display:flex;gap:12px;align-items:center}.date{background:#123b39;color:var(--g);padding:10px;border-radius:10px}.music{padding:16px;background:linear-gradient(135deg,#17243a,#202344);border-color:#286d64}audio{width:100%;margin-top:10px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0d1422;border-top:1px solid var(--line);display:flex;justify-content:center}.bottom nav{width:min(600px,100%);display:grid;grid-template-columns:repeat(4,1fr);padding:8px}.bottom button{background:none;color:var(--muted);font-size:11px}.bottom b{display:block;font-size:19px}.bottom .active{color:var(--g)}.modal{display:none;position:fixed;inset:0;background:#000b;z-index:5;padding:15px;overflow:auto}.modal.show{display:flex;justify-content:center;align-items:flex-start}.box{background:#111b2d;border:1px solid var(--line);border-radius:17px;padding:18px;width:min(620px,100%);margin:auto}.field{margin:12px 0}.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}.field textarea{min-height:80px}.detail{color:#c6cfdd;line-height:1.8;white-space:pre-wrap}.detail img{width:100%;max-height:240px;object-fit:cover;border-radius:12px;margin:12px 0}@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.news img{height:175px}}
 
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            padding: 16px;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #1f293d;
-            margin-bottom: 16px;
-        }
-
-        header h1 {
-            font-size: 22px;
-            color: #10b981;
-            font-weight: 700;
-        }
-
-        header p {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 4px;
-        }
-
-        .card {
-            background: #131b2e;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #1f293d;
-        }
-
-        .card h3 {
-            font-size: 14px;
-            color: #f3f4f6;
-            margin-bottom: 8px;
-        }
-
-        .card p {
-            font-size: 12px;
-            color: #9ca3af;
-            line-height: 1.5;
-        }
-
-        .badge {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>GameVerse 🎮</h1>
-        <p>Created by Venura</p>
-    </header>
-
-    <div class="card">
-        <span class="badge">GTA VI UPDATE</span>
-        <h3>🔥 නවතම තොරතුරු</h3>
-        <p>Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් සහ ප්‍රධාන චරිත හඳුන්වා දී ඇත. ඉදිරියේදී වැඩිදුර විස්තර එකතු වේ.</p>
-    </div>
-
-    <div class="card">
-        <span class="badge">FREE FIRE</span>
-        <h3>🏆 ශ්‍රී ලංකා කුසලානය</h3>
-        <p>මෙම මස පැවැත්වෙන තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි. ඉක්මනින් සම්බන්ධ වන්න.</p>
-    </div>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="si">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GameVerse - Venura</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            padding: 16px;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #1f293d;
-            margin-bottom: 16px;
-        }
-
-        header h1 {
-            font-size: 22px;
-            color: #10b981;
-            font-weight: 700;
-        }
-
-        header p {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 4px;
-        }
-
-        .card {
-            background: #131b2e;
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #1f293d;
-        }
-
-        .card h3 {
-            font-size: 14px;
-            color: #f3f4f6;
-            margin-bottom: 8px;
-        }
-
-        .card p {
-            font-size: 12px;
-            color: #9ca3af;
-            line-height: 1.5;
-        }
-
-        .badge {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        /* Music Player Style */
-        .music-player {
-            background: linear-gradient(135deg, #131b2e, #1f293d);
-            border: 1px solid #10b981;
-        }
-
-        audio {
-            width: 100%;
-            margin-top: 10px;
-            outline: none;
-            filter: invert(100%) hue-rotate(180deg) brightness(1.5);
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>GameVerse 🎮</h1>
-        <p>Created by Venura</p>
-    </header>
-
-    <!-- MUSIC PLAYER SECTION -->
-    <div class="card music-player">
-        <span class="badge">MUSIC VIBE 🎵</span>
-        <h3>සිංහල සින්දු Player</h3>
-        <p>ගේම්ස් බලන ගමන් සිංහල සින්ඩුවක් අහන්න:</p>
-        <audio controls>
-            <source src="https://www.soundhelix.examples/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
-
-    <div class="card">
-        <span class="badge">GTA VI UPDATE</span>
-        <h3>🔥 නවතම තොරතුරු</h3>
-        <p>Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් සහ ප්‍රධාන චරිත හඳුන්වා දී ඇත. ඉදිරියේදී වැඩිදුර විස්තර එකතු වේ.</p>
-    </div>
-
-    <div class="card">
-        <span class="badge">FREE FIRE</span>
-        <h3>🏆 ශ්‍රී ලංකා කුසලානය</h3>
-        <p>මෙම මස පැවැත්වෙන තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි. ඉක්මනින් සම්බන්ධ වන්න.</p>
-    </div>
-
-</body>
-</html>
+.brand-wrap{min-width:0}
+.logo{font-size:29px;letter-spacing:.3px;display:inline-block;white-space:nowrap;background:linear-gradient(90deg,#20d6a0,#49b8ff,#c77dff,#ffcf65,#20d6a0);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logo-colors 5s linear infinite,logo-drift 3.8s ease-in-out infinite}
+.creator-line{display:flex;align-items:center;gap:7px;margin-top:5px;color:#b9c7dc;font-size:13px;font-weight:600;white-space:nowrap;animation:credit-drift 4.8s ease-in-out infinite}
+.creator-line span{background:linear-gradient(90deg,#9aa8bd,#20d6a0,#b78cff,#9aa8bd);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logo-colors 6s linear infinite}
+.creator-line i{width:5px;height:5px;border-radius:50%;background:#20d6a0;box-shadow:0 0 9px #20d6a0;animation:dot-pulse 1.4s ease-in-out infinite alternate}
+.creator-line i:last-child{animation-delay:.7s}
+.brand-dots{display:flex;gap:5px;margin-top:7px}
+.brand-dots b{width:5px;height:5px;border-radius:50%;background:#20d6a0;animation:dot-hop 1s ease-in-out infinite}
+.brand-dots b:nth-child(2){animation-delay:.18s;background:#58b9ff}.brand-dots b:nth-child(3){animation-delay:.36s;background:#c77dff}
+@keyframes logo-colors{to{background-position:300% 0}}
+@keyframes logo-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
+@keyframes credit-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(13px)}}
+@keyframes dot-pulse{from{opacity:.35;transform:scale(.75)}to{opacity:1;transform:scale(1.25)}}
+@keyframes dot-hop{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(-5px);opacity:1}}
+.tab-panel{display:none;min-height:65vh}
+.tab-panel.active{display:block}
+.tab-panel.from-right{animation:panel-in-right .34s ease both}
+.tab-panel.from-left{animation:panel-in-left .34s ease both}
+@keyframes panel-in-right{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes panel-in-left{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+.bottom nav{grid-template-columns:repeat(5,1fr);max-width:600px}
+.bottom button{padding:7px 3px;font-size:10px}
+.bottom b{font-size:18px}
+@media(prefers-reduced-motion:reduce){.logo,.creator-line,.creator-line span,.creator-line i,.brand-dots b,.tab-panel.active{animation:none!important}}
+</style></head><body><main><header><div><div class="brand-wrap"><div class="logo"><span>GameVerse</span> 🎮</div><div class="creator-line"><i></i><span>Created by Venura Bashitha</span><i></i></div><div class="brand-dots"><b></b><b></b><b></b></div></div></div><button class="dark" onclick="openAdmin()">⚙ Admin</button></header>
+<section id="home" class="tab-panel active"><section class="hero"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200" alt="Gaming"><div class="heroText"><span class="tag">WELCOME TO GAMEVERSE SL</span><h1>Gaming ලෝකයේ අලුත්ම තොරතුරු එකම තැනකින්!</h1><p>Games • News • Updates • Events</p><button class="green" onclick="goTo('news')">Explore News →</button></div></section></section>
+<section id="news" class="tab-panel"><div class="search"><input id="search" placeholder="Game එකක් හෝ News එකක් සොයන්න..." oninput="renderNews()"><button class="dark" onclick="search.value='';renderNews()">✕</button></div>
+<div class="head"><h2>📰 Latest Gaming News</h2><button class="read" onclick="setFilter('All')">View All →</button></div><div class="filters"><button class="filter active" onclick="setFilter('All')">All</button><button class="filter" onclick="setFilter('GTA VI')">GTA VI</button><button class="filter" onclick="setFilter('Free Fire')">Free Fire</button><button class="filter" onclick="setFilter('PUBG')">PUBG</button><button class="filter" onclick="setFilter('Other')">Other</button></div><div class="grid" id="newsGrid"></div></section>
+<section id="games" class="tab-panel"><div class="head"><h2>🎮 Trending Games</h2></div><div class="games"><div class="game">🚗<b>GTA VI</b></div><div class="game">🔥<b>Free Fire</b></div><div class="game">🪖<b>PUBG Mobile</b></div><div class="game">🦖<b>ARK</b></div><div class="game">⚔️<b>Genshin</b></div><div class="game">🏎️<b>Racing</b></div></div></section>
+<section id="events" class="tab-panel"><div class="head"><h2>📅 Upcoming Events</h2><button class="read" onclick="openAdmin()">+ Add</button></div><div class="events" id="eventList"></div></section>
+<section id="music" class="tab-panel"><div class="head"><h2>🎵 Music Vibe</h2></div><div class="music"><b>GameVerse Music Player</b><p class="muted">Admin Panel එකෙන් MP3 link එකක් එකතු කරන්න.</p><audio id="player" controls></audio><small id="musicHint" class="muted">Music එකක් තවම එකතු කරලා නැහැ.</small></div></section><footer class="muted" style="text-align:center;padding:25px">GameVerse SL 🎮<br>Created by Venura</footer></main>
+<div class="bottom"><nav><button class="active" onclick="navTo('home',this)"><b>⌂</b>Home</button><button onclick="navTo('news',this)"><b>▤</b>News</button><button onclick="navTo('games',this)"><b>🎮</b>Games</button><button onclick="navTo('events',this)"><b>♧</b>Events</button><button onclick="navTo('music',this)"><b>♫</b>Music</button></nav></div>
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')"><div class="box"><div class="head"><h2 id="detailTitle"></h2><button class="dark" onclick="closeModal('detailModal')">✕</button></div><div class="detail"><img id="detailImage" alt=""><span id="detailTag" class="tag"></span><p id="detailText"></p></div></div></div>
+<div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')"><div class="box"><div class="head"><h2>⚙ Admin Panel</h2><button class="dark" onclick="closeModal('adminModal')">✕</button></div><p class="muted">News, Events සහ Music link එකතු කරන්න. මේ browser එකේ save වේ.</p><h3>➕ Add News</h3>
+<div class="field"><label>News Title</label><input id="nTitle" placeholder="News මාතෘකාව"></div><div class="field"><label>Category</label><select id="nCategory"><option>GTA VI</option><option>Free Fire</option><option>PUBG</option><option>Other</option></select></div><div class="field"><label>Photo URL</label><input id="nImage" placeholder="https://..."></div><div class="field"><label>Short Description</label><textarea id="nShort"></textarea></div><div class="field"><label>Full News</label><textarea id="nFull"></textarea></div><button class="green" onclick="addNews()">Publish News</button>
+<h3>📅 Add Event</h3><div class="field"><label>Event Name</label><input id="eTitle"></div><div class="field"><label>Date</label><input id="eDate" type="date"></div><div class="field"><label>Description</label><input id="eDesc"></div><button class="green" onclick="addEvent()">Add Event</button>
+<h3>🎵 Music URL (MP3)</h3><div class="field"><input id="musicUrl" placeholder="https://.../song.mp3"></div><button class="green" onclick="saveMusic()">Save Music</button><h3>🗑 Manage News</h3><div id="manageNews"></div></div></div>
+<script>
+const starter=[
+{id:1,category:'GTA VI',title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥',short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.',full:'GTA VI පිළිබඳ නිල තොරතුරු තහවුරු වූ විට මෙහි යාවත්කාලීන කරන්න. මෙය demo news එකකි.',image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
+{id:2,category:'Free Fire',title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆',short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.',full:'Free Fire තරඟාවලි, events සහ updates පිළිබඳ තොරතුරු මෙහි පළ කරන්න. මෙය demo news එකකි.',image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
+{id:3,category:'PUBG',title:'PUBG Mobile – අලුත් Updates',short:'PUBG Mobile updates සහ events ගැන දැනගන්න.',full:'PUBG Mobile updates පිළිබඳ විස්තර මෙහි පළ කරන්න. මෙය demo news එකකි.',image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}];
+let news=JSON.parse(localStorage.getItem('gv_news')||'null')||starter,events=JSON.parse(localStorage.getItem('gv_events')||'[]'),filter='All';
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function persist(){localStorage.setItem('gv_news',JSON.stringify(news));localStorage.setItem('gv_events',JSON.stringify(events))}
+function renderNews(){let q=search.value.toLowerCase(),a=news.filter(n=>(filter==='All'||n.category===filter)&&(n.title+' '+n.short+' '+n.category).toLowerCase().includes(q));newsGrid.innerHTML=a.length?a.map(n=>`<article class="news"><img src="${esc(n.image)}" alt=""><div class="body"><span class="tag">${esc(n.category)}</span><h3>${esc(n.title)}</h3><p>${esc(n.short)}</p><button class="read" onclick="openDetail(${n.id})">Read More →</button></div></article>`).join(''):'<p class="muted">News හමු වුණේ නැහැ.</p>';renderManage()}
+function setFilter(f){filter=f;document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.textContent.trim()===f));renderNews()}
+function openDetail(id){let n=news.find(x=>x.id===id);detailTitle.textContent=n.title;detailImage.src=n.image;detailTag.textContent=n.category;detailText.textContent=n.full;detailModal.classList.add('show')}
+function openAdmin(){adminModal.classList.add('show');renderManage()}function closeModal(id){document.getElementById(id).classList.remove('show')}
+function addNews(){if(!nTitle.value.trim()||!nShort.value.trim()){alert('News Title සහ Short Description දාන්න.');return}news.unshift({id:Date.now(),category:nCategory.value,title:nTitle.value,short:nShort.value,full:nFull.value||nShort.value,image:nImage.value||'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'});persist();renderNews();['nTitle','nShort','nFull','nImage'].forEach(id=>document.getElementById(id).value='');alert('News එක Publish කළා!')}
+function renderManage(){manageNews.innerHTML=news.map(n=>`<div style="display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #26344b"><span>${esc(n.title)}</span><button class="dark" onclick="deleteNews(${n.id})">Delete</button></div>`).join('')}
+function deleteNews(id){if(confirm('මේ News එක මකන්නද?')){news=news.filter(n=>n.id!==id);persist();renderNews()}}
+function addEvent(){if(!eTitle.value.trim()){alert('Event නම දාන්න.');return}events.push({title:eTitle.value,date:eDate.value,desc:eDesc.value});localStorage.setItem('gv_events',JSON.stringify(events));renderEvents();eTitle.value=eDate.value=eDesc.value='';alert('Event එක එකතු කළා!')}
+function renderEvents(){eventList.innerHTML=events.length?events.map(e=>`<div class="event"><b class="date">${esc(e.date||'TBA')}</b><div><b>${esc(e.title)}</b><p class="muted">${esc(e.desc)}</p></div></div>`).join(''):'<div class="event muted">Events තවම නැහැ. Admin Panel එකෙන් එකතු කරන්න.</div>'}
+function saveMusic(){if(!musicUrl.value.trim()){alert('MP3 link එකක් දාන්න.');return}localStorage.setItem('gv_music',musicUrl.value.trim());loadMusic();alert('Music link එක save කළා!')}
+function loadMusic(){let u=localStorage.getItem('gv_music');if(u){player.src=u;musicHint.textContent='Music player ready.'}}
+let lastTabIndex=0;
+const tabOrder=['home','news','games','events','music'];
+function goTo(id){navTo(id,document.querySelector('.bottom button[onclick*="\''+id+'\'"]'))}
+function navTo(id,b){
+  const next=tabOrder.indexOf(id), direction=next>=lastTabIndex?'from-right':'from-left';
+  document.querySelectorAll('.tab-panel').forEach(panel=>{
+    panel.classList.remove('active','from-left','from-right');
+  });
+  const panel=document.getElementById(id);
+  if(panel){panel.classList.add('active',direction);lastTabIndex=next;}
+  document.querySelectorAll('.bottom button').forEach(x=>x.classList.remove('active'));
+  if(b)b.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+renderNews();renderEvents();loadMusic();
+</script></body></html>
