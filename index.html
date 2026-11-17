@@ -41,9 +41,10 @@ button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:
 .events{display:grid;gap:10px}
 .event{padding:14px;display:flex;gap:12px;align-items:center}
 .date{background:#123b39;color:var(--g);padding:10px;border-radius:10px}
-.music{padding:16px;background:linear-gradient(135deg,#17243a,#202344);border-color:#286d64}
+.music{padding:16px;background:linear-gradient(135deg,#17243a,#202344);border-color:#286d64;margin:14px 0}
 .music audio{width:100%;margin-top:15px}
 .music-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.youtube-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;margin-top:12px;background:#080e1d}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#0d1422;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:4}
 .bottom nav{width:min(600px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:8px}
 .bottom button{background:none;color:var(--muted);font-size:10px;padding:7px 3px}
@@ -93,19 +94,31 @@ button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:
 </div>
 </section>
 
-<!-- Added local MP3 player: keep music.mp3 in the same folder as index.html -->
+<!-- Local MP3: keep music.mp3 in the same app assets folder as index.html -->
 <div class="music">
-<b>🎵 GameVerse Music Player</b>
-<p class="muted">Eka Mohothak - Ushain x Ushith</p>
-<audio id="localMusic" controls autoplay preload="auto">
-<source src="music.mp3" type="audio/mpeg">
+<b>🎵 Song 01 – Eka Mohothak</b>
+<p class="muted">Eka Mohothak - Ushain x Ushith (Local MP3)</p>
+<audio id="localMusic" controls preload="auto" loop>
+<source src="./music.mp3" type="audio/mpeg">
 Your browser does not support audio.
 </audio>
 <div class="music-actions">
-<button class="green" onclick="playMusic()">▶ Play Song</button>
-<button class="dark" onclick="pauseMusic()">⏸ Pause</button>
+<button class="green" onclick="playLocalMusic()">▶ Play Song 01</button>
+<button class="dark" onclick="pauseLocalMusic()">⏸ Pause</button>
 </div>
-<p id="musicHint" class="muted">App එක විවෘත කළ විට ගීතය ස්වයංක්‍රීයව Play වීමට උත්සාහ කරයි.</p>
+<p id="localHint" class="muted">music.mp3 file එක APK Assets තුළ index.html සමඟ එකම folder එකේ තබන්න.</p>
+</div>
+
+<!-- YouTube video is embedded using the official YouTube player -->
+<div class="music">
+<b>🎵 Song 02 – YouTube Song</b>
+<p class="muted">ඔයා එවපු YouTube Link එක</p>
+<div id="youtubePlayer" class="youtube-frame"></div>
+<div class="music-actions">
+<button class="green" onclick="playYoutubeMusic()">▶ Play Song 02</button>
+<button class="dark" onclick="pauseYoutubeMusic()">⏸ Pause</button>
+</div>
+<p id="youtubeHint" class="muted">YouTube සින්දුව Play කිරීමට Play Song 02 ඔබන්න. Internet අවශ්‍යයි.</p>
 </div>
 </section>
 
@@ -138,13 +151,21 @@ Your browser does not support audio.
 <section id="music" class="tab-panel">
 <div class="head"><h2>🎵 Music Vibe</h2></div>
 <div class="music">
-<b>GameVerse Music Player</b>
-<p class="muted">Eka Mohothak - Ushain x Ushith</p>
-<p class="muted">ගීතය Home Page එකේ Player එකෙන් පාලනය කරන්න.</p>
+<b>Song 01 – Eka Mohothak</b>
+<p class="muted">Local MP3 Player</p>
 <div class="music-actions">
-<button class="green" onclick="playMusic()">▶ Play Song</button>
-<button class="dark" onclick="pauseMusic()">⏸ Pause</button>
+<button class="green" onclick="playLocalMusic()">▶ Play Song 01</button>
+<button class="dark" onclick="pauseLocalMusic()">⏸ Pause</button>
 </div>
+</div>
+<div class="music">
+<b>Song 02 – YouTube</b>
+<p class="muted">YouTube Player</p>
+<div class="music-actions">
+<button class="green" onclick="playYoutubeMusic()">▶ Play Song 02</button>
+<button class="dark" onclick="pauseYoutubeMusic()">⏸ Pause</button>
+</div>
+<p class="muted">YouTube Player එක Home Page එකේ පෙන්වයි.</p>
 </div>
 </section>
 
@@ -182,8 +203,8 @@ GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)
 <div class="field"><label>Date</label><input id="eDate" type="date"></div>
 <div class="field"><label>Description</label><input id="eDesc"></div>
 <button class="green" onclick="addEvent()">Add Event</button>
-<h3>🎵 Music File</h3>
-<p class="muted">App එකේ music.mp3 file එකම Play වේ. Music File එක index.html සමඟ එකම folder එකේ තබන්න.</p>
+<h3>🎵 Music Files</h3>
+<p class="muted">Song 01: music.mp3 APK Assets folder එකේ තබන්න. Song 02: YouTube embed එක Internet හරහා Play වේ.</p>
 <h3>🗑 Manage News</h3><div id="manageNews"></div>
 </div></div>
 
@@ -204,6 +225,7 @@ const trendingGames=[
 let news=JSON.parse(localStorage.getItem('gv_news')||'null')||starterNews;
 let events=JSON.parse(localStorage.getItem('gv_events')||'[]');
 let filter='All';
+
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function persist(){localStorage.setItem('gv_news',JSON.stringify(news));localStorage.setItem('gv_events',JSON.stringify(events));}
 function renderNews(){
@@ -211,7 +233,8 @@ const input=document.getElementById('searchInput');
 const searchVal=input?input.value.toLowerCase():'';
 const a=news.filter(n=>(filter==='All'||n.category===filter)&&(n.title+' '+n.short+' '+n.category).toLowerCase().includes(searchVal));
 document.getElementById('newsGrid').innerHTML=a.length?a.map(n=>`<article class="news"><img src="${esc(n.image)}" alt=""><div class="body"><span class="tag">${esc(n.category)}</span><h3>${esc(n.title)}</h3><p>${esc(n.short)}</p><button class="read" onclick="openDetail(${n.id})">Read More →</button></div></article>`).join(''):'<p class="muted">News හමු වුණේ නැහැ.</p>';
-renderManage();}
+renderManage();
+}
 function setFilter(f){filter=f;document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.textContent.trim()===f));renderNews();}
 function openDetail(id){const n=news.find(x=>x.id===id);if(!n)return;document.getElementById('detailTitle').textContent=n.title;document.getElementById('detailImage').src=n.image;document.getElementById('detailTag').textContent=n.category;document.getElementById('detailText').textContent=n.full;document.getElementById('detailModal').classList.add('show');}
 function openGameDetail(index){const g=trendingGames[index];document.getElementById('detailTitle').textContent=g.title;document.getElementById('detailImage').src=g.img;document.getElementById('detailTag').textContent=g.tag;document.getElementById('detailText').textContent=g.desc;document.getElementById('detailModal').classList.add('show');}
@@ -226,20 +249,85 @@ function addEvent(){const title=document.getElementById('eTitle').value;if(!titl
 function renderEvents(){const list=document.getElementById('eventList');if(!events.length){list.innerHTML='<p class="muted">දැනට Events නැහැ.</p>';return;}list.innerHTML=events.map((e,i)=>`<div class="event"><div class="date">📅<br>${esc(e.date||'TBA')}</div><div style="flex:1"><b>${esc(e.title)}</b><p class="muted">${esc(e.desc||'')}</p></div><button class="dark" onclick="deleteEvent(${i})">✕</button></div>`).join('');}
 function deleteEvent(index){if(confirm('මේ Event එක මකන්නද?')){events.splice(index,1);persist();renderEvents();}}
 
-// Local MP3 playback. Keep music.mp3 beside index.html in the app's asset folder.
-function loadMusic(){
- const audio=document.getElementById('localMusic');
- if(!audio)return;
- audio.src='music.mp3';
- audio.load();
- audio.play().then(()=>{const hint=document.getElementById('musicHint');if(hint)hint.textContent='🎵 ගීතය Play වෙනවා!';})
- .catch(()=>{const hint=document.getElementById('musicHint');if(hint)hint.textContent='🎵 Auto Play අවහිර වුණා නම් Play Song ඔබන්න.';});
+/* MUSIC: local MP3 and YouTube player */
+const localAudio=document.getElementById('localMusic');
+let ytPlayer=null;
+let ytApiReady=false;
+const YOUTUBE_VIDEO_ID='LSCx8JJEuVQ';
+
+function setLocalHint(message){
+ const el=document.getElementById('localHint');
+ if(el)el.textContent=message;
 }
-function playMusic(){const audio=document.getElementById('localMusic');audio.play().catch(()=>alert('Play Song බොත්තම නැවත ඔබන්න.'));}
-function pauseMusic(){document.getElementById('localMusic').pause();}
-function navTo(id,button){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom nav button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');if(id==='news')renderNews();if(id==='games')renderGames();if(id==='events')renderEvents();window.scrollTo({top:0,behavior:'smooth'});}
-function goTo(id){const ids=['home','news','games','events','music'];const buttons=document.querySelectorAll('.bottom nav button');const index=ids.indexOf(id);navTo(id,index>=0?buttons[index]:null);}
-document.addEventListener('DOMContentLoaded',()=>{renderNews();renderGames();renderEvents();loadMusic();});
+function setYoutubeHint(message){
+ const el=document.getElementById('youtubeHint');
+ if(el)el.textContent=message;
+}
+function playLocalMusic(){
+ if(ytPlayer && typeof ytPlayer.pauseVideo==='function')ytPlayer.pauseVideo();
+ localAudio.play().then(()=>setLocalHint('🎵 Song 01 දැන් Play වෙනවා!'))
+ .catch(()=>setLocalHint('❌ MP3 එක Play වුණේ නැහැ. music.mp3 file එක සහ path එක පරීක්ෂා කරන්න.'));
+}
+function pauseLocalMusic(){localAudio.pause();setLocalHint('Song 01 Pause කර ඇත.');}
+function playYoutubeMusic(){
+ localAudio.pause();
+ if(ytPlayer && typeof ytPlayer.playVideo==='function'){
+   ytPlayer.playVideo();
+   setYoutubeHint('YouTube Song එක Play කිරීමට ඉල්ලීම යැව්වා. අවහිර වුණොත් Player එකේ Play ඔබන්න.');
+ }else{
+   setYoutubeHint('YouTube Player එක තවම Load වෙනවා. තත්පර කිහිපයකින් නැවත උත්සාහ කරන්න.');
+ }
+}
+function pauseYoutubeMusic(){
+ if(ytPlayer && typeof ytPlayer.pauseVideo==='function')ytPlayer.pauseVideo();
+ setYoutubeHint('YouTube Song එක Pause කළා.');
+}
+function onYouTubeIframeAPIReady(){
+ ytApiReady=true;
+ ytPlayer=new YT.Player('youtubePlayer',{
+   width:'100%',
+   height:'100%',
+   videoId:YOUTUBE_VIDEO_ID,
+   playerVars:{playsinline:1,rel:0},
+   events:{
+     onReady:function(){setYoutubeHint('YouTube Player සූදානම්. Play Song 02 ඔබන්න.');},
+     onStateChange:function(event){
+       if(event.data===YT.PlayerState.PLAYING){
+         localAudio.pause();
+         setYoutubeHint('🎵 YouTube Song එක Play වෙනවා!');
+       }
+     },
+     onError:function(){setYoutubeHint('YouTube වීඩියෝව Embed කිරීම සීමා කර තිබිය හැක. YouTube එකේ විවෘත කර බලන්න.');}
+   }
+ });
+}
+(function loadYouTubeAPI(){
+ const tag=document.createElement('script');
+ tag.src='https://www.youtube.com/iframe_api';
+ tag.async=true;
+ document.head.appendChild(tag);
+})();
+
+function navTo(id,button){
+ document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.bottom nav button').forEach(b=>b.classList.remove('active'));
+ if(button)button.classList.add('active');
+ if(id==='news')renderNews();
+ if(id==='games')renderGames();
+ if(id==='events')renderEvents();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function goTo(id){
+ const ids=['home','news','games','events','music'];
+ const buttons=document.querySelectorAll('.bottom nav button');
+ const index=ids.indexOf(id);
+ navTo(id,index>=0?buttons[index]:null);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ renderNews();renderGames();renderEvents();
+ localAudio.addEventListener('error',()=>setLocalHint('❌ music.mp3 සොයාගත නොහැක. APK Assets folder එකට දාන්න.'));
+});
 </script>
 </body>
 </html>
