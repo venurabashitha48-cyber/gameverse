@@ -136,7 +136,7 @@
       border-radius: 15px;
       overflow: hidden;
     }
-    .news img {
+    .news img, .game img {
       width: 100%;
       height: 145px;
       object-fit: cover;
@@ -152,19 +152,19 @@
       color: var(--muted);
       line-height: 1.5;
     }
-    .games {
+    .games-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
     }
     .game {
       text-align: center;
-      padding: 14px 5px;
+      padding-bottom: 12px;
     }
     .game b {
       display: block;
-      margin-top: 7px;
-      font-size: 13px;
+      margin: 10px 0 5px;
+      font-size: 14px;
     }
     .events {
       display: grid;
@@ -200,6 +200,7 @@
       border-top: 1px solid var(--line);
       display: flex;
       justify-content: center;
+      z-index: 4;
     }
     .bottom nav {
       width: min(600px, 100%);
@@ -261,8 +262,8 @@
       margin: 12px 0;
     }
     @media(min-width: 700px) {
-      .grid { grid-template-columns: repeat(3, 1fr); }
-      .news img { height: 175px; }
+      .grid, .games-grid { grid-template-columns: repeat(3, 1fr); }
+      .news img, .game img { height: 175px; }
     }
     .brand-wrap { min-width: 0; }
     .logo {
@@ -286,7 +287,6 @@
       font-size: 13px;
       font-weight: 600;
       white-space: nowrap;
-      animation: credit-drift 4.8s ease-in-out infinite;
     }
     .creator-line span {
       background: linear-gradient(90deg, #9aa8bd, #20d6a0, #b78cff, #9aa8bd);
@@ -302,35 +302,18 @@
       border-radius: 50%;
       background: #20d6a0;
       box-shadow: 0 0 9px #20d6a0;
-      animation: dot-pulse 1.4s ease-in-out infinite alternate;
     }
-    .creator-line i:last-child { animation-delay: .7s; }
     .brand-dots { display: flex; gap: 5px; margin-top: 7px; }
     .brand-dots b {
       width: 5px;
       height: 5px;
       border-radius: 50%;
       background: #20d6a0;
-      animation: dot-hop 1s ease-in-out infinite;
     }
-    .brand-dots b:nth-child(2) { animation-delay: .18s; background: #58b9ff; }
-    .brand-dots b:nth-child(3) { animation-delay: .36s; background: #c77dff; }
     @keyframes logo-colors { to { background-position: 300% 0; } }
     @keyframes logo-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(9px); } }
-    @keyframes credit-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(13px); } }
-    @keyframes dot-pulse { from { opacity: .35; transform: scale(.75); } to { opacity: 1; transform: scale(1.25); } }
-    @keyframes dot-hop { 0%, 100% { transform: translateY(0); opacity: .55; } 50% { transform: translateY(-5px); opacity: 1; } }
     .tab-panel { display: none; min-height: 65vh; }
     .tab-panel.active { display: block; }
-    .tab-panel.from-right { animation: panel-in-right .34s ease both; }
-    .tab-panel.from-left { animation: panel-in-left .34s ease both; }
-    @keyframes panel-in-right { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes panel-in-left { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: translateX(0); } }
-    @media(prefers-reduced-motion: reduce) {
-      .logo, .creator-line, .creator-line span, .creator-line i, .brand-dots b, .tab-panel.active {
-        animation: none !important;
-      }
-    }
   </style>
 </head>
 <body>
@@ -343,7 +326,7 @@
           <div class="brand-dots"><b></b><b></b><b></b></div>
         </div>
       </div>
-      <!-- රහස් Admin බොත්තම: සාමාන්‍ය අයෙකුට නොපෙන්වයි -->
+      <!-- Admin බොත්තම: පාදයේ (Footer) වාර දෙකක් ක්ලික් කර password දුන් විට පෙන්වයි -->
       <button id="adminBtn" class="dark" style="display:none;" onclick="openAdmin()">⚙ Admin</button>
     </header>
 
@@ -361,8 +344,8 @@
 
     <section id="news" class="tab-panel">
       <div class="search">
-        <input id="search" placeholder="Game එකක් හෝ News එකක් සොයන්න..." oninput="renderNews()">
-        <button class="dark" onclick="search.value='';renderNews()">✕</button>
+        <input id="searchInput" placeholder="Game එකක් හෝ News එකක් සොයන්න..." oninput="renderNews()">
+        <button class="dark" onclick="document.getElementById('searchInput').value='';renderNews()">✕</button>
       </div>
       <div class="head">
         <h2>📰 Latest Gaming News</h2>
@@ -379,14 +362,9 @@
     </section>
 
     <section id="games" class="tab-panel">
-      <div class="head"><h2>🎮 Trending Games</h2></div>
-      <div class="games">
-        <div class="game">🚗<b>GTA VI</b></div>
-        <div class="game">🔥<b>Free Fire</b></div>
-        <div class="game">🪖<b>PUBG Mobile</b></div>
-        <div class="game">🦖<b>ARK</b></div>
-        <div class="game">⚔️<b>Genshin</b></div>
-        <div class="game">🏎️<b>Racing</b></div>
+      <div class="head"><h2>🎮 Trending & New Games</h2></div>
+      <div class="games-grid" id="gamesGrid">
+        <!-- නව Games ලැයිස්තුව -->
       </div>
     </section>
 
@@ -405,7 +383,7 @@
       </div>
     </section>
 
-    <footer class="muted" style="text-align:center;padding:25px" ondblclick="requestAdminAccess()">GameVerse SL 🎮<br>Created by Venura</footer>
+    <footer class="muted" style="text-align:center;padding:25px;cursor:pointer;" ondblclick="requestAdminAccess()" title="Double click here for Admin">GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)</footer>
   </main>
 
   <div class="bottom">
@@ -438,7 +416,7 @@
         <h2>⚙ Admin Panel</h2>
         <button class="dark" onclick="closeModal('adminModal')">✕</button>
       </div>
-      <p class="muted">News, Events සහ Music link එකතු කරන්න. මේ ඔබගේ browser එකේ පමණක් save වේ.</p>
+      <p class="muted">News, Events සහ Music link එකතු කරන්න. මෙය ඔබගේ browser එකේ save වේ.</p>
       
       <h3>➕ Add News</h3>
       <div class="field"><label>News Title</label><input id="nTitle" placeholder="News මාතෘකාව"></div>
@@ -464,13 +442,23 @@
   </div>
 
   <script>
-    const starter = [
-      {id:1, category:'GTA VI', title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥', short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.', full:'GTA VI පිළිබඳ නිල තොරතුරු තහවුරු වූ විට මෙහි යාවත්කාලීන කරන්න. මෙය demo news එකකි.', image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
-      {id:2, category:'Free Fire', title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆', short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.', full:'Free Fire තරඟාවලි, events සහ updates පිළිබඳ තොරතුරු මෙහි පළ කරන්න. මෙය demo news එකකි.', image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
-      {id:3, category:'PUBG', title:'PUBG Mobile – අලුත් Updates', short:'PUBG Mobile updates සහ events ගැන දැනගන්න.', full:'PUBG Mobile updates පිළිබඳ විස්තර මෙහි පළ කරන්න. මෙය demo news එකකි.', image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}
+    const starterNews = [
+      {id:1, category:'GTA VI', title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥', short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.', full:'GTA VI පිළිබඳ නිල තොරතුරු සහ ලෝක ප්‍රසිද්ධ Map එක පිළිබඳ අලුත්ම විස්තර මෙහි අඩංගු වේ.', image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
+      {id:2, category:'Free Fire', title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆', short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.', full:'ශ්‍රී ලංකා ක්‍රීඩකයින් සඳහා විශේෂිත Free Fire තරඟාවලි සහ නවතම patch notes.', image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
+      {id:3, category:'PUBG', title:'PUBG Mobile – අලුත් Updates', short:'PUBG Mobile updates සහ events ගැන දැනගන්න.', full:'නවීන ආයුධ සහ නව map එකක් සමඟින් පැමිණෙන PUBG Mobile අලුත්ම update එක.', image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}
+    ];
+
+    // සැබෑ නවතම Games ලැයිස්තුව
+    const trendingGames = [
+      {title:'GTA VI', tag:'Open World / Action', img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900', desc:'Rockstar Games විසින් නිර්මාණය කරන ලද ලොව වඩාත්ම අපේක්ෂිත Open World ක්‍රීඩාව.'},
+      {title:'Free Fire', tag:'Battle Royale', img:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900', desc:'මൊබයිල් ක්‍රීඩකයින් අතර අතිශය ජනප්‍රිය වේගවත් Battle Royale ක්‍රීඩාවක්.'},
+      {title:'PUBG Mobile', tag:'Tactical Shooter', img:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900', desc:'උපායශීලී යුධ පිටි අත්දැකීමක් ලබාදෙන ජනප්‍රියම ජංගම දුරකථන ක්‍රීඩාව.'},
+      {title:'Black Myth: Wukong', tag:'Action RPG', img:'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900', desc:'චීන පුරාවෘත්ත මත පදනම් වූ විශ්මයජනක ග්‍රැෆික්ස් සහිත අලුත්ම ක්‍රීඩාව.'},
+      {title:'Valorant', tag:'Tactical FPS', img:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900', desc:'විශේෂ බලතල සහිත වීරයන් එකිනෙකා සමඟ සටන් වැදෙන ප්‍රසිද්ධ PC ක්‍රීඩාවක්.'},
+      {title:'Minecraft', tag:'Sandbox / Survival', img:'https://images.unsplash.com/photo-1627856013091-fed6e4e30e52?w=900', desc:'ඔබේ පරිකල්පනයට අනුව ඕනෑම ලෝකයක් නිර්මාණය කළ හැකි සදාකාලික ජනප්‍රිය ක්‍රීඩාවක්.'}
     ];
     
-    let news = JSON.parse(localStorage.getItem('gv_news') || 'null') || starter,
+    let news = JSON.parse(localStorage.getItem('gv_news') || 'null') || starterNews,
         events = JSON.parse(localStorage.getItem('gv_events') || '[]'),
         filter = 'All';
 
@@ -481,8 +469,9 @@
     }
     
     function renderNews() {
-      let q = search.value.toLowerCase(),
-          a = news.filter(n => (filter === 'All' || n.category === filter) && (n.title + ' ' + n.short + ' ' + n.category).toLowerCase().includes(q));
+      let searchVal = document.getElementById('searchInput').value.toLowerCase();
+      let a = news.filter(n => (filter === 'All' || n.category === filter) && (n.title + ' ' + n.short + ' ' + n.category).toLowerCase().includes(searchVal));
+      let newsGrid = document.getElementById('newsGrid');
       newsGrid.innerHTML = a.length ? a.map(n => `<article class="news"><img src="${esc(n.image)}" alt=""><div class="body"><span class="tag">${esc(n.category)}</span><h3>${esc(n.title)}</h3><p>${esc(n.short)}</p><button class="read" onclick="openDetail(${n.id})">Read More →</button></div></article>`).join('') : '<p class="muted">News හමු වුණේ නැහැ.</p>';
       renderManage();
     }
@@ -495,35 +484,58 @@
     
     function openDetail(id) {
       let n = news.find(x => x.id === id);
-      detailTitle.textContent = n.title;
-      detailImage.src = n.image;
-      detailTag.textContent = n.category;
-      detailText.textContent = n.full;
-      detailModal.classList.add('show');
+      if(!n) return;
+      document.getElementById('detailTitle').textContent = n.title;
+      document.getElementById('detailImage').src = n.image;
+      document.getElementById('detailTag').textContent = n.category;
+      document.getElementById('detailText').textContent = n.full;
+      document.getElementById('detailModal').classList.add('show');
+    }
+
+    function openGameDetail(index) {
+      let g = trendingGames[index];
+      document.getElementById('detailTitle').textContent = g.title;
+      document.getElementById('detailImage').src = g.img;
+      document.getElementById('detailTag').textContent = g.tag;
+      document.getElementById('detailText').textContent = g.desc;
+      document.getElementById('detailModal').classList.add('show');
+    }
+
+    function renderGames() {
+      let grid = document.getElementById('gamesGrid');
+      grid.innerHTML = trendingGames.map((g, idx) => `
+        <div class="game" onclick="openGameDetail(${idx})" style="cursor:pointer;">
+          <img src="${g.img}" alt="${g.title}">
+          <b>${g.title}</b>
+          <span class="tag">${g.tag}</span>
+        </div>
+      `).join('');
     }
 
     function requestAdminAccess() {
       let pass = prompt("Admin Password එක ඇතුළත් කරන්න:");
       if (pass === "admin123") {
         document.getElementById('adminBtn').style.display = 'block';
-        alert("Admin අවසරය සාර්ථකයි! දැන් ඉහළින් ඇති Admin බටන් එක භාවිත කළ හැක.");
+        alert("Admin අවසරය සාර්ථකයි! දැන් ඉහළ දකුණු කෙළවරේ ඇති Admin බටන් එක ක්ලික් කරන්න.");
       } else if (pass !== null) {
         alert("වැරදි මුරපදයක්!");
       }
     }
 
-    function openAdmin() { adminModal.classList.add('show'); renderManage(); }
+    function openAdmin() { document.getElementById('adminModal').classList.add('show'); renderManage(); }
     function closeModal(id) { document.getElementById(id).classList.remove('show'); }
     
     function addNews() {
-      if (!nTitle.value.trim() || !nShort.value.trim()) { alert('News Title සහ Short Description දාන්න.'); return; }
+      let title = document.getElementById('nTitle').value;
+      let short = document.getElementById('nShort').value;
+      if (!title.trim() || !short.trim()) { alert('News Title සහ Short Description දාන්න.'); return; }
       news.unshift({
         id: Date.now(),
-        category: nCategory.value,
-        title: nTitle.value,
-        short: nShort.value,
-        full: nFull.value || nShort.value,
-        image: nImage.value || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'
+        category: document.getElementById('nCategory').value,
+        title: title,
+        short: short,
+        full: document.getElementById('nFull').value || short,
+        image: document.getElementById('nImage').value || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'
       });
       persist();
       renderNews();
@@ -532,7 +544,8 @@
     }
     
     function renderManage() {
-      manageNews.innerHTML = news.map(n => `<div style="display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid #26344b"><span>${esc(n.title)}</span><button class="dark" onclick="deleteNews(${n.id})">Delete</button></div>`).join('');
+      let manageNews = document.getElementById('manageNews');
+      manageNews.innerHTML = news.map(n => `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #26344b"><span>${esc(n.title)}</span><button class="dark" onclick="deleteNews(${n.id})">Delete</button></div>`).join('');
     }
     
     function deleteNews(id) {
@@ -544,45 +557,14 @@
     }
     
     function addEvent() {
-      if (!eTitle.value.trim()) { alert('Event නම දාන්න.'); return; }
-      events.push({ title: eTitle.value, date: eDate.value, desc: eDesc.value });
-      localStorage.setItem('gv_events', JSON.stringify(events));
+      let title = document.getElementById('eTitle').value;
+      if (!title.trim()) { alert('Event නම දාන්න.'); return; }
+      events.push({ title: title, date: document.getElementById('eDate').value, desc: document.getElementById('eDesc').value });
+      persist();
       renderEvents();
-      eTitle.value = eDate.value = eDesc.value = '';
+      ['eTitle', 'eDate', 'eDesc'].forEach(id => document.getElementById(id).value = '');
       alert('Event එක එකතු කළා!');
     }
     
     function renderEvents() {
-      eventList.innerHTML = events.length ? events.map(e => `<div class="event"><b class="date">${esc(e.date || 'TBA')}</b><div><b>${esc(e.title)}</b><p class="muted">${esc(e.desc)}</p></div></div>`).join('') : '<div class="event muted">Events තවම නැහැ.</div>';
-    }
-
-    function saveMusic() {
-      let mUrl = musicUrl.value.trim();
-      if (!mUrl) { alert('MP3 link එකක් දාන්න.'); return; }
-      localStorage.setItem('gv_music', mUrl);
-      loadMusic();
-      alert('Music link එක save කළා!');
-    }
-
-    function loadMusic() {
-      let u = localStorage.getItem('gv_music');
-      if (u) {
-        player.src = u;
-        musicHint.textContent = 'Music player ready.';
-      } else {
-        player.src = '';
-        musicHint.textContent = 'සින්දුවක් තවම එකතු කර නැත.';
-      }
-    }
-
-    let lastTabIndex = 0;
-    const tabOrder = ['home', 'news', 'games', 'events', 'music'];
-    function goTo(id) { navTo(id, document.querySelector('.bottom button[onclick*="\'' + id + '\'"]')); }
-    
-    function navTo(id, b) {
-      const next = tabOrder.indexOf(id), direction = next >= lastTabIndex ? 'from-right' : 'from-left';
-      document.querySelectorAll('.tab-panel').forEach(panel => {
-        panel.classList.remove('active', 'from-left', 'from-right');
-      });
-      const panel = document.getElementById(id);
-      if (panel) { panel.classList.add('ac
+      le
