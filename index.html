@@ -1,412 +1,245 @@
-
 <!DOCTYPE html>
 <html lang="si">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameVerse SL - By Venura Bashitha</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>GameVerse SL</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: #080d18;
-    color: white;
-}
-
-header {
-    background: #101a2c;
-    padding: 20px;
-    text-align: center;
-    border-bottom: 2px solid #00e5ff;
-}
-
-.logo {
-    font-size: 27px;
-    font-weight: bold;
-    color: #00e5ff;
-}
-
-.creator {
-    color: #aaa;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-nav {
-    display: flex;
-    overflow-x: auto;
-    background: #111c30;
-    padding: 10px;
-    gap: 8px;
-}
-
-nav button {
-    background: #202e46;
-    color: white;
-    border: none;
-    padding: 11px 16px;
-    border-radius: 8px;
-    white-space: nowrap;
-}
-
-nav button.active {
-    background: #00bcd4;
-    color: black;
-}
-
-main {
-    padding: 15px;
-}
-
-.tab-panel {
-    display: none;
-}
-
-.tab-panel.active {
-    display: block;
-}
-
-.hero {
-    background: linear-gradient(135deg,#073b55,#171b43);
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
-
-.hero h1 {
-    color: #00e5ff;
-    margin-bottom: 10px;
-}
-
-.card {
-    background: #121e32;
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 14px;
-    border: 1px solid #263c59;
-}
-
-.card h3 {
-    color: #00e5ff;
-    margin-bottom: 8px;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 12px;
-    margin: 7px 0;
-    border: none;
-    border-radius: 7px;
-    background: #26354d;
-    color: white;
-}
-
-.action {
-    background: #00cce8;
-    color: #00131b;
-    padding: 11px 16px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.delete {
-    background: #e53935;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 6px;
-}
-
-iframe {
-    width: 100%;
-    height: 210px;
-    border: none;
-    border-radius: 10px;
-    margin-top: 12px;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: #8995a8;
-    font-size: 12px;
-}
+:root{--bg:#0b1020;--card:#141e31;--line:#26344b;--g:#20d6a0;--muted:#9aa8bd}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f5f7fb;font-family:Arial,sans-serif}
+main{max-width:1000px;margin:auto;padding:18px 16px 90px}
+header,.head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+header{border-bottom:1px solid var(--line);padding:8px 0 18px}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:bold}
+.dark{background:var(--card);color:white;border:1px solid var(--line)}
+.green{background:var(--g);color:#061710}
+.hero{position:relative;margin:20px 0;border-radius:20px;overflow:hidden}
+.hero img{width:100%;height:280px;object-fit:cover;opacity:.55}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#080e1ded,transparent)}
+.heroText{position:absolute;z-index:1;bottom:20px;left:20px;right:18px}
+.hero h1{font-size:clamp(23px,5vw,37px);margin:12px 0}
+.muted,.hero p{color:var(--muted);line-height:1.6}
+.tag{display:inline-block;background:#123b39;color:var(--g);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:bold}
+.search{display:flex;gap:8px;margin:18px 0}
+.search input,.field input,.field textarea,.field select{width:100%;padding:13px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:white}
+.head{margin:25px 0 13px}
+.head h2{font-size:19px;margin:0}
+.read{background:none;color:var(--g);padding:0}
+.filters{display:flex;gap:8px;overflow:auto;margin-bottom:14px}
+.filter{white-space:nowrap;background:var(--card);color:var(--muted);border:1px solid var(--line)}
+.filter.active{color:var(--g);border-color:var(--g)}
+.grid,.games-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.news,.game,.event,.music{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.news img,.game img{width:100%;height:145px;object-fit:cover}
+.body{padding:13px}
+.body h3{font-size:15px;line-height:1.4;margin:10px 0 7px}
+.body p{font-size:13px;color:var(--muted);line-height:1.5}
+.game{text-align:center;padding-bottom:12px}
+.game b{display:block;margin:10px 0 5px;font-size:14px}
+.events{display:grid;gap:10px}
+.event{padding:14px;display:flex;gap:12px;align-items:center}
+.date{background:#123b39;color:var(--g);padding:10px;border-radius:10px}
+.music{padding:16px;background:linear-gradient(135deg,#17243a,#202344);border-color:#286d64}
+.music audio{width:100%;margin-top:15px}
+.music-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0d1422;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:4}
+.bottom nav{width:min(600px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:8px}
+.bottom button{background:none;color:var(--muted);font-size:10px;padding:7px 3px}
+.bottom b{display:block;font-size:18px}
+.bottom .active{color:var(--g)}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:5;padding:15px;overflow:auto}
+.modal.show{display:flex;justify-content:center;align-items:flex-start}
+.box{background:#111b2d;border:1px solid var(--line);border-radius:17px;padding:18px;width:min(620px,100%);margin:auto}
+.field{margin:12px 0}
+.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+.field textarea{min-height:80px}
+.detail{color:#c6cfdd;line-height:1.8;white-space:pre-wrap}
+.detail img{width:100%;max-height:240px;object-fit:cover;border-radius:12px;margin:12px 0}
+.brand-wrap{min-width:0}
+.logo{font-size:29px;letter-spacing:.3px;display:inline-block;white-space:nowrap;background:linear-gradient(90deg,#20d6a0,#49b8ff,#c77dff,#ffcf65,#20d6a0);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logo-colors 5s linear infinite,logo-drift 3.8s ease-in-out infinite}
+.creator-line{display:flex;align-items:center;gap:7px;margin-top:5px;color:#b9c7dc;font-size:13px;font-weight:600;white-space:nowrap}
+.creator-line span{background:linear-gradient(90deg,#9aa8bd,#20d6a0,#b78cff,#9aa8bd);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logo-colors 6s linear infinite}
+.creator-line i{width:5px;height:5px;border-radius:50%;background:#20d6a0;box-shadow:0 0 9px #20d6a0}
+.brand-dots{display:flex;gap:5px;margin-top:7px}
+.brand-dots b{width:5px;height:5px;border-radius:50%;background:#20d6a0}
+@keyframes logo-colors{to{background-position:300% 0}}
+@keyframes logo-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
+.tab-panel{display:none;min-height:65vh}
+.tab-panel.active{display:block}
+@media(min-width:700px){.grid,.games-grid{grid-template-columns:repeat(3,1fr)}.news img,.game img{height:175px}}
 </style>
 </head>
-
 <body>
-
+<main>
 <header>
-    <div class="logo">🎮 GameVerse SL</div>
-    <div class="creator">Created by Venura Bashitha</div>
+<div class="brand-wrap">
+<div class="logo">GameVerse 🎮</div>
+<div class="creator-line"><i></i><span>Created by Venura Bashitha</span><i></i></div>
+<div class="brand-dots"><b></b><b></b><b></b></div>
+</div>
+<button id="adminBtn" class="dark" style="display:none" onclick="openAdmin()">⚙ Admin</button>
 </header>
 
-<nav>
-    <button class="active" onclick="showTab('home',this)">Home</button>
-    <button onclick="showTab('news',this)">News</button>
-    <button onclick="showTab('games',this)">Games</button>
-    <button onclick="showTab('events',this)">Events</button>
-    <button onclick="showTab('music',this)">Music</button>
-    <button onclick="showTab('admin',this)">Admin</button>
-</nav>
-
-<main>
-
 <section id="home" class="tab-panel active">
+<section class="hero">
+<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200" alt="Gaming">
+<div class="heroText">
+<span class="tag">WELCOME TO GAMEVERSE SL</span>
+<h1>Gaming ලෝකයේ අලුත්ම තොරතුරු එකම තැනකින්!</h1>
+<p>Games • News • Updates • Events</p>
+<button class="green" onclick="goTo('news')">Explore News →</button>
+</div>
+</section>
 
-    <div class="hero">
-        <h1>Welcome to GameVerse SL!</h1>
-        <p>Gaming News • Games • Events • Tips</p>
-        <p>ඔබේ Gaming ලෝකයට සාදරයෙන් පිළිගනිමු!</p>
-    </div>
-
-    <div class="card">
-        <h3>🎵 Now Playing</h3>
-        <p>GameVerse SL Music Player</p>
-        <iframe
-            id="homePlayer"
-            src="https://www.youtube.com/embed/LSCx8JJEuVQ?playsinline=1"
-            title="GameVerse Music Player"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-        <p>Play බොත්තම ඔබලා සිංදුව අහන්න.</p>
-    </div>
-
-    <div class="card">
-        <h3>🔥 Latest Updates</h3>
-        <p>අලුත්ම Gaming News සහ Updates මෙතැනින් බලන්න.</p>
-    </div>
-
+<!-- Added local MP3 player: keep music.mp3 in the same folder as index.html -->
+<div class="music">
+<b>🎵 GameVerse Music Player</b>
+<p class="muted">Eka Mohothak - Ushain x Ushith</p>
+<audio id="localMusic" controls autoplay preload="auto">
+<source src="music.mp3" type="audio/mpeg">
+Your browser does not support audio.
+</audio>
+<div class="music-actions">
+<button class="green" onclick="playMusic()">▶ Play Song</button>
+<button class="dark" onclick="pauseMusic()">⏸ Pause</button>
+</div>
+<p id="musicHint" class="muted">App එක විවෘත කළ විට ගීතය ස්වයංක්‍රීයව Play වීමට උත්සාහ කරයි.</p>
+</div>
 </section>
 
 <section id="news" class="tab-panel">
-    <h2>📰 Gaming News</h2>
-    <div id="newsList"></div>
+<div class="search">
+<input id="searchInput" placeholder="Game එකක් හෝ News එකක් සොයන්න..." oninput="renderNews()">
+<button class="dark" onclick="document.getElementById('searchInput').value='';renderNews()">✕</button>
+</div>
+<div class="head"><h2>📰 Latest Gaming News</h2><button class="read" onclick="setFilter('All')">View All →</button></div>
+<div class="filters">
+<button class="filter active" onclick="setFilter('All')">All</button>
+<button class="filter" onclick="setFilter('GTA VI')">GTA VI</button>
+<button class="filter" onclick="setFilter('Free Fire')">Free Fire</button>
+<button class="filter" onclick="setFilter('PUBG')">PUBG</button>
+<button class="filter" onclick="setFilter('Other')">Other</button>
+</div>
+<div class="grid" id="newsGrid"></div>
 </section>
 
 <section id="games" class="tab-panel">
-    <h2>🎮 Games</h2>
-    <div id="gamesList"></div>
+<div class="head"><h2>🎮 Trending & New Games</h2></div>
+<div class="games-grid" id="gamesGrid"></div>
 </section>
 
 <section id="events" class="tab-panel">
-    <h2>🏆 Gaming Events</h2>
-    <div id="eventsList"></div>
+<div class="head"><h2>📅 Upcoming Events</h2></div>
+<div class="events" id="eventList"></div>
 </section>
 
 <section id="music" class="tab-panel">
-    <h2>🎵 Music</h2>
-    <div class="card">
-        <h3>GameVerse Music</h3>
-        <iframe
-            src="https://www.youtube.com/embed/LSCx8JJEuVQ?playsinline=1"
-            title="GameVerse Music"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-    </div>
+<div class="head"><h2>🎵 Music Vibe</h2></div>
+<div class="music">
+<b>GameVerse Music Player</b>
+<p class="muted">Eka Mohothak - Ushain x Ushith</p>
+<p class="muted">ගීතය Home Page එකේ Player එකෙන් පාලනය කරන්න.</p>
+<div class="music-actions">
+<button class="green" onclick="playMusic()">▶ Play Song</button>
+<button class="dark" onclick="pauseMusic()">⏸ Pause</button>
+</div>
+</div>
 </section>
 
-<section id="admin" class="tab-panel">
-    <h2>🔐 Admin Panel</h2>
-
-    <div class="card" id="loginBox">
-        <p>Admin Password</p>
-        <input type="password" id="password" placeholder="Enter password">
-        <button class="action" onclick="login()">Login</button>
-    </div>
-
-    <div id="adminArea" style="display:none">
-
-        <div class="card">
-            <h3>Add News</h3>
-            <input id="newsTitle" placeholder="News Title">
-            <textarea id="newsDescription" placeholder="News Description"></textarea>
-            <button class="action" onclick="addItem('news')">Publish News</button>
-        </div>
-
-        <div class="card">
-            <h3>Add Game</h3>
-            <input id="gameTitle" placeholder="Game Name">
-            <textarea id="gameDescription" placeholder="Game Description"></textarea>
-            <button class="action" onclick="addItem('games')">Add Game</button>
-        </div>
-
-        <div class="card">
-            <h3>Add Event</h3>
-            <input id="eventTitle" placeholder="Event Name">
-            <textarea id="eventDescription" placeholder="Event Details"></textarea>
-            <button class="action" onclick="addItem('events')">Add Event</button>
-        </div>
-
-        <button class="action" onclick="logout()">Logout</button>
-    </div>
-</section>
-
+<footer class="muted" style="text-align:center;padding:25px;cursor:pointer" ondblclick="requestAdminAccess()">
+GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)
+</footer>
 </main>
 
-<footer>
-    GameVerse SL © 2026<br>
-    Created with ❤️ by Venura Bashitha
-</footer>
+<div class="bottom"><nav>
+<button class="active" onclick="navTo('home',this)"><b>⌂</b>Home</button>
+<button onclick="navTo('news',this)"><b>▤</b>News</button>
+<button onclick="navTo('games',this)"><b>🎮</b>Games</button>
+<button onclick="navTo('events',this)"><b>♧</b>Events</button>
+<button onclick="navTo('music',this)"><b>♫</b>Music</button>
+</nav></div>
+
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
+<div class="box"><div class="head"><h2 id="detailTitle"></h2><button class="dark" onclick="closeModal('detailModal')">✕</button></div>
+<div class="detail"><img id="detailImage" alt=""><span id="detailTag" class="tag"></span><p id="detailText"></p></div></div>
+</div>
+
+<div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')">
+<div class="box">
+<div class="head"><h2>⚙ Admin Panel</h2><button class="dark" onclick="closeModal('adminModal')">✕</button></div>
+<p class="muted">News සහ Events එකතු කරන්න. දත්ත Browser එකේ Save වේ.</p>
+<h3>➕ Add News</h3>
+<div class="field"><label>News Title</label><input id="nTitle" placeholder="News මාතෘකාව"></div>
+<div class="field"><label>Category</label><select id="nCategory"><option>GTA VI</option><option>Free Fire</option><option>PUBG</option><option>Other</option></select></div>
+<div class="field"><label>Photo URL</label><input id="nImage" placeholder="https://..."></div>
+<div class="field"><label>Short Description</label><textarea id="nShort"></textarea></div>
+<div class="field"><label>Full News</label><textarea id="nFull"></textarea></div>
+<button class="green" onclick="addNews()">Publish News</button>
+<h3>📅 Add Event</h3>
+<div class="field"><label>Event Name</label><input id="eTitle"></div>
+<div class="field"><label>Date</label><input id="eDate" type="date"></div>
+<div class="field"><label>Description</label><input id="eDesc"></div>
+<button class="green" onclick="addEvent()">Add Event</button>
+<h3>🎵 Music File</h3>
+<p class="muted">App එකේ music.mp3 file එකම Play වේ. Music File එක index.html සමඟ එකම folder එකේ තබන්න.</p>
+<h3>🗑 Manage News</h3><div id="manageNews"></div>
+</div></div>
 
 <script>
+const starterNews=[
+{id:1,category:'GTA VI',title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥',short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.',full:'GTA VI පිළිබඳ නිල තොරතුරු සහ Map එක පිළිබඳ විස්තර මෙහි අඩංගු වේ.',image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
+{id:2,category:'Free Fire',title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆',short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.',full:'ශ්‍රී ලංකා ක්‍රීඩකයින් සඳහා විශේෂිත Free Fire තරඟාවලි සහ නවතම patch notes.',image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
+{id:3,category:'PUBG',title:'PUBG Mobile – අලුත් Updates',short:'PUBG Mobile updates සහ events ගැන දැනගන්න.',full:'PUBG Mobile අලුත්ම update එක පිළිබඳ තොරතුරු.',image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}
+];
+const trendingGames=[
+{title:'GTA VI',tag:'Open World / Action',img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900',desc:'Rockstar Games හි අපේක්ෂිත Open World ක්‍රීඩාව.'},
+{title:'Free Fire',tag:'Battle Royale',img:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900',desc:'ජනප්‍රිය Battle Royale ක්‍රීඩාවක්.'},
+{title:'PUBG Mobile',tag:'Tactical Shooter',img:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900',desc:'ජනප්‍රිය ජංගම දුරකථන ක්‍රීඩාවක්.'},
+{title:'Black Myth: Wukong',tag:'Action RPG',img:'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900',desc:'චීන පුරාවෘත්ත මත පදනම් වූ ක්‍රීඩාවක්.'},
+{title:'Valorant',tag:'Tactical FPS',img:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900',desc:'විශේෂ බලතල සහිත වීරයන් සිටින PC ක්‍රීඩාවක්.'},
+{title:'Minecraft',tag:'Sandbox / Survival',img:'https://images.unsplash.com/photo-1627856013091-fed6e4e30e52?w=900',desc:'ඔබේම ලෝකයක් නිර්මාණය කළ හැකි ක්‍රීඩාවක්.'}
+];
+let news=JSON.parse(localStorage.getItem('gv_news')||'null')||starterNews;
+let events=JSON.parse(localStorage.getItem('gv_events')||'[]');
+let filter='All';
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function persist(){localStorage.setItem('gv_news',JSON.stringify(news));localStorage.setItem('gv_events',JSON.stringify(events));}
+function renderNews(){
+const input=document.getElementById('searchInput');
+const searchVal=input?input.value.toLowerCase():'';
+const a=news.filter(n=>(filter==='All'||n.category===filter)&&(n.title+' '+n.short+' '+n.category).toLowerCase().includes(searchVal));
+document.getElementById('newsGrid').innerHTML=a.length?a.map(n=>`<article class="news"><img src="${esc(n.image)}" alt=""><div class="body"><span class="tag">${esc(n.category)}</span><h3>${esc(n.title)}</h3><p>${esc(n.short)}</p><button class="read" onclick="openDetail(${n.id})">Read More →</button></div></article>`).join(''):'<p class="muted">News හමු වුණේ නැහැ.</p>';
+renderManage();}
+function setFilter(f){filter=f;document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.textContent.trim()===f));renderNews();}
+function openDetail(id){const n=news.find(x=>x.id===id);if(!n)return;document.getElementById('detailTitle').textContent=n.title;document.getElementById('detailImage').src=n.image;document.getElementById('detailTag').textContent=n.category;document.getElementById('detailText').textContent=n.full;document.getElementById('detailModal').classList.add('show');}
+function openGameDetail(index){const g=trendingGames[index];document.getElementById('detailTitle').textContent=g.title;document.getElementById('detailImage').src=g.img;document.getElementById('detailTag').textContent=g.tag;document.getElementById('detailText').textContent=g.desc;document.getElementById('detailModal').classList.add('show');}
+function renderGames(){document.getElementById('gamesGrid').innerHTML=trendingGames.map((g,idx)=>`<div class="game" onclick="openGameDetail(${idx})" style="cursor:pointer"><img src="${g.img}" alt="${esc(g.title)}"><b>${esc(g.title)}</b><span class="tag">${esc(g.tag)}</span></div>`).join('');}
+function requestAdminAccess(){const pass=prompt('Admin Password එක ඇතුළත් කරන්න:');if(pass==='admin123'){document.getElementById('adminBtn').style.display='block';alert('Admin අවසරය සාර්ථකයි!');}else if(pass!==null){alert('වැරදි මුරපදයක්!');}}
+function openAdmin(){document.getElementById('adminModal').classList.add('show');renderManage();}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+function addNews(){const title=document.getElementById('nTitle').value;const short=document.getElementById('nShort').value;if(!title.trim()||!short.trim()){alert('News Title සහ Short Description දාන්න.');return;}news.unshift({id:Date.now(),category:document.getElementById('nCategory').value,title:title,short:short,full:document.getElementById('nFull').value||short,image:document.getElementById('nImage').value||'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'});persist();renderNews();['nTitle','nShort','nFull','nImage'].forEach(id=>document.getElementById(id).value='');alert('News එක Publish කළා!');}
+function renderManage(){const box=document.getElementById('manageNews');if(!box)return;box.innerHTML=news.map(n=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #26344b"><span>${esc(n.title)}</span><button class="dark" onclick="deleteNews(${n.id})">Delete</button></div>`).join('');}
+function deleteNews(id){if(confirm('මේ News එක මකන්නද?')){news=news.filter(n=>n.id!==id);persist();renderNews();}}
+function addEvent(){const title=document.getElementById('eTitle').value;if(!title.trim()){alert('Event නම දාන්න.');return;}events.push({title:title,date:document.getElementById('eDate').value,desc:document.getElementById('eDesc').value});persist();renderEvents();['eTitle','eDate','eDesc'].forEach(id=>document.getElementById(id).value='');alert('Event එක එකතු කළා!');}
+function renderEvents(){const list=document.getElementById('eventList');if(!events.length){list.innerHTML='<p class="muted">දැනට Events නැහැ.</p>';return;}list.innerHTML=events.map((e,i)=>`<div class="event"><div class="date">📅<br>${esc(e.date||'TBA')}</div><div style="flex:1"><b>${esc(e.title)}</b><p class="muted">${esc(e.desc||'')}</p></div><button class="dark" onclick="deleteEvent(${i})">✕</button></div>`).join('');}
+function deleteEvent(index){if(confirm('මේ Event එක මකන්නද?')){events.splice(index,1);persist();renderEvents();}}
 
-function showTab(tab, button) {
-    document.querySelectorAll('.tab-panel').forEach(section => {
-        section.classList.remove('active');
-    });
-
-    document.getElementById(tab).classList.add('active');
-
-    document.querySelectorAll('nav button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-
-    button.classList.add('active');
+// Local MP3 playback. Keep music.mp3 beside index.html in the app's asset folder.
+function loadMusic(){
+ const audio=document.getElementById('localMusic');
+ if(!audio)return;
+ audio.src='music.mp3';
+ audio.load();
+ audio.play().then(()=>{const hint=document.getElementById('musicHint');if(hint)hint.textContent='🎵 ගීතය Play වෙනවා!';})
+ .catch(()=>{const hint=document.getElementById('musicHint');if(hint)hint.textContent='🎵 Auto Play අවහිර වුණා නම් Play Song ඔබන්න.';});
 }
-
-const defaultData = {
-    news: [],
-    games: [],
-    events: []
-};
-
-function getData() {
-    try {
-        return JSON.parse(localStorage.getItem('gameverseData')) || defaultData;
-    } catch (error) {
-        return defaultData;
-    }
-}
-
-function saveData(data) {
-    localStorage.setItem('gameverseData', JSON.stringify(data));
-}
-
-function addItem(type) {
-    let title = document.getElementById(
-        type === 'news' ? 'newsTitle' :
-        type === 'games' ? 'gameTitle' : 'eventTitle'
-    ).value.trim();
-
-    let description = document.getElementById(
-        type === 'news' ? 'newsDescription' :
-        type === 'games' ? 'gameDescription' : 'eventDescription'
-    ).value.trim();
-
-    if (!title || !description) {
-        alert('කරුණාකර සියලු විස්තර ඇතුළත් කරන්න!');
-        return;
-    }
-
-    let data = getData();
-
-    data[type].unshift({
-        id: Date.now(),
-        title: title,
-        description: description
-    });
-
-    saveData(data);
-
-    document.getElementById(
-        type === 'news' ? 'newsTitle' :
-        type === 'games' ? 'gameTitle' : 'eventTitle'
-    ).value = '';
-
-    document.getElementById(
-        type === 'news' ? 'newsDescription' :
-        type === 'games' ? 'gameDescription' : 'eventDescription'
-    ).value = '';
-
-    renderAll();
-    alert('Successfully Published!');
-}
-
-function deleteItem(type, id) {
-    if (!confirm('මෙය Delete කරන්නද?')) return;
-
-    let data = getData();
-    data[type] = data[type].filter(item => item.id !== id);
-    saveData(data);
-    renderAll();
-}
-
-function renderList(type) {
-    let container = document.getElementById(
-        type === 'news' ? 'newsList' :
-        type === 'games' ? 'gamesList' : 'eventsList'
-    );
-
-    let data = getData();
-    container.innerHTML = '';
-
-    if (data[type].length === 0) {
-        container.innerHTML = '<div class="card">තවම කිසිවක් එකතු කර නැත.</div>';
-        return;
-    }
-
-    data[type].forEach(item => {
-        let card = document.createElement('div');
-        card.className = 'card';
-
-        let heading = document.createElement('h3');
-        heading.textContent = item.title;
-
-        let paragraph = document.createElement('p');
-        paragraph.textContent = item.description;
-
-        card.appendChild(heading);
-        card.appendChild(paragraph);
-
-        if (document.getElementById('adminArea').style.display === 'block') {
-            let button = document.createElement('button');
-            button.className = 'delete';
-            button.textContent = 'Delete';
-            button.onclick = () => deleteItem(type, item.id);
-            card.appendChild(button);
-        }
-
-        container.appendChild(card);
-    });
-}
-
-function renderAll() {
-    renderList('news');
-    renderList('games');
-    renderList('events');
-}
-
-function login() {
-    if (document.getElementById('password').value === 'admin123') {
-        document.getElementById('loginBox').style.display = 'none';
-        document.getElementById('adminArea').style.display = 'block';
-        renderAll();
-        alert('Admin Login Successful!');
-    } else {
-        alert('Wrong Password!');
-    }
-}
-
-function logout() {
-    document.getElementById('adminArea').style.display = 'none';
-    document.getElementById('loginBox').style.display = 'block';
-    renderAll();
-}
-
-renderAll();
-
+function playMusic(){const audio=document.getElementById('localMusic');audio.play().catch(()=>alert('Play Song බොත්තම නැවත ඔබන්න.'));}
+function pauseMusic(){document.getElementById('localMusic').pause();}
+function navTo(id,button){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom nav button').forEach(b=>b.classList.remove('active'));if(button)button.classList.add('active');if(id==='news')renderNews();if(id==='games')renderGames();if(id==='events')renderEvents();window.scrollTo({top:0,behavior:'smooth'});}
+function goTo(id){const ids=['home','news','games','events','music'];const buttons=document.querySelectorAll('.bottom nav button');const index=ids.indexOf(id);navTo(id,index>=0?buttons[index]:null);}
+document.addEventListener('DOMContentLoaded',()=>{renderNews();renderGames();renderEvents();loadMusic();});
 </script>
-
 </body>
 </html>
