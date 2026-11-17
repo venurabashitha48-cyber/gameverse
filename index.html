@@ -1,570 +1,438 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="si">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1020">
-  <title>GameVerse SL</title>
-  <style>
-    :root {
-      --bg: #0b1020;
-      --card: #141e31;
-      --line: #26344b;
-      --g: #20d6a0;
-      --muted: #9aa8bd;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: #f5f7fb;
-      font-family: Arial, sans-serif;
-    }
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 18px 16px 90px;
-    }
-    header, .head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-    header {
-      border-bottom: 1px solid var(--line);
-      padding: 8px 0 18px;
-    }
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 14px;
-      font-weight: bold;
-    }
-    .dark {
-      background: var(--card);
-      color: white;
-      border: 1px solid var(--line);
-    }
-    .green {
-      background: var(--g);
-      color: #061710;
-    }
-    .hero {
-      position: relative;
-      margin: 20px 0;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-    .hero img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      opacity: .55;
-    }
-    .hero:after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, #080e1ded, transparent);
-    }
-    .heroText {
-      position: absolute;
-      z-index: 1;
-      bottom: 20px;
-      left: 20px;
-      right: 18px;
-    }
-    .hero h1 {
-      font-size: clamp(23px, 5vw, 37px);
-      margin: 12px 0;
-    }
-    .muted, .hero p {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .tag {
-      display: inline-block;
-      background: #123b39;
-      color: var(--g);
-      padding: 7px 10px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: bold;
-    }
-    .search {
-      display: flex;
-      gap: 8px;
-      margin: 18px 0;
-    }
-    .search input, .field input, .field textarea, .field select {
-      width: 100%;
-      padding: 13px;
-      border-radius: 11px;
-      border: 1px solid var(--line);
-      background: var(--card);
-      color: white;
-    }
-    .head { margin: 25px 0 13px; }
-    .head h2 { font-size: 19px; margin: 0; }
-    .read { background: none; color: var(--g); padding: 0; }
-    .filters {
-      display: flex;
-      gap: 8px;
-      overflow: auto;
-      margin-bottom: 14px;
-    }
-    .filter {
-      white-space: nowrap;
-      background: var(--card);
-      color: var(--muted);
-      border: 1px solid var(--line);
-    }
-    .filter.active {
-      color: var(--g);
-      border-color: var(--g);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 13px;
-    }
-    .news, .game, .event, .music {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      overflow: hidden;
-    }
-    .news img, .game img {
-      width: 100%;
-      height: 145px;
-      object-fit: cover;
-    }
-    .body { padding: 13px; }
-    .body h3 {
-      font-size: 15px;
-      line-height: 1.4;
-      margin: 10px 0 7px;
-    }
-    .body p {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 13px;
-    }
-    .game {
-      text-align: center;
-      padding-bottom: 12px;
-    }
-    .game b {
-      display: block;
-      margin: 10px 0 5px;
-      font-size: 14px;
-    }
-    .events {
-      display: grid;
-      gap: 10px;
-    }
-    .event {
-      padding: 14px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .date {
-      background: #123b39;
-      color: var(--g);
-      padding: 10px;
-      border-radius: 10px;
-    }
-    .music {
-      padding: 16px;
-      background: linear-gradient(135deg, #17243a, #202344);
-      border-color: #286d64;
-    }
-    audio {
-      width: 100%;
-      margin-top: 10px;
-    }
-    .bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #0d1422;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: center;
-      z-index: 4;
-    }
-    .bottom nav {
-      width: min(600px, 100%);
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      padding: 8px;
-    }
-    .bottom button {
-      background: none;
-      color: var(--muted);
-      font-size: 10px;
-      padding: 7px 3px;
-    }
-    .bottom b {
-      display: block;
-      font-size: 18px;
-    }
-    .bottom .active { color: var(--g); }
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #000b;
-      z-index: 5;
-      padding: 15px;
-      overflow: auto;
-    }
-    .modal.show {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-    .box {
-      background: #111b2d;
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      padding: 18px;
-      width: min(620px, 100%);
-      margin: auto;
-    }
-    .field { margin: 12px 0; }
-    .field label {
-      display: block;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-    .field textarea { min-height: 80px; }
-    .detail {
-      color: #c6cfdd;
-      line-height: 1.8;
-      white-space: pre-wrap;
-    }
-    .detail img {
-      width: 100%;
-      max-height: 240px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin: 12px 0;
-    }
-    @media(min-width: 700px) {
-      .grid, .games-grid { grid-template-columns: repeat(3, 1fr); }
-      .news img, .game img { height: 175px; }
-    }
-    .brand-wrap { min-width: 0; }
-    .logo {
-      font-size: 29px;
-      letter-spacing: .3px;
-      display: inline-block;
-      white-space: nowrap;
-      background: linear-gradient(90deg, #20d6a0, #49b8ff, #c77dff, #ffcf65, #20d6a0);
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: logo-colors 5s linear infinite, logo-drift 3.8s ease-in-out infinite;
-    }
-    .creator-line {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin-top: 5px;
-      color: #b9c7dc;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .creator-line span {
-      background: linear-gradient(90deg, #9aa8bd, #20d6a0, #b78cff, #9aa8bd);
-      background-size: 250% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: logo-colors 6s linear infinite;
-    }
-    .creator-line i {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #20d6a0;
-      box-shadow: 0 0 9px #20d6a0;
-    }
-    .brand-dots { display: flex; gap: 5px; margin-top: 7px; }
-    .brand-dots b {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #20d6a0;
-    }
-    @keyframes logo-colors { to { background-position: 300% 0; } }
-    @keyframes logo-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(9px); } }
-    .tab-panel { display: none; min-height: 65vh; }
-    .tab-panel.active { display: block; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>GameVerse SL</title>
+
+<style>
+:root {
+--bg:#0b1020;
+--card:#141e31;
+--line:#26344b;
+--g:#20d6a0;
+--muted:#9aa8bd;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#f5f7fb;font-family:Arial,sans-serif}
+main{max-width:1000px;margin:auto;padding:18px 16px 90px}
+header,.head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+header{border-bottom:1px solid var(--line);padding:8px 0 18px}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:bold}
+.dark{background:var(--card);color:white;border:1px solid var(--line)}
+.green{background:var(--g);color:#061710}
+.hero{position:relative;margin:20px 0;border-radius:20px;overflow:hidden}
+.hero img{width:100%;height:280px;object-fit:cover;opacity:.55}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#080e1ded,transparent)}
+.heroText{position:absolute;z-index:1;bottom:20px;left:20px;right:18px}
+.hero h1{font-size:clamp(23px,5vw,37px);margin:12px 0}
+.muted,.hero p{color:var(--muted);line-height:1.6}
+.tag{display:inline-block;background:#123b39;color:var(--g);padding:7px 10px;border-radius:8px;font-size:11px;font-weight:bold}
+.search{display:flex;gap:8px;margin:18px 0}
+.search input,.field input,.field textarea,.field select{width:100%;padding:13px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:white}
+.head{margin:25px 0 13px}
+.head h2{font-size:19px;margin:0}
+.read{background:none;color:var(--g);padding:0}
+.filters{display:flex;gap:8px;overflow:auto;margin-bottom:14px}
+.filter{white-space:nowrap;background:var(--card);color:var(--muted);border:1px solid var(--line)}
+.filter.active{color:var(--g);border-color:var(--g)}
+.grid,.games-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.news,.game,.event,.music{background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden}
+.news img,.game img{width:100%;height:145px;object-fit:cover}
+.body{padding:13px}
+.body h3{font-size:15px;line-height:1.4;margin:10px 0 7px}
+.body p{font-size:13px;color:var(--muted);line-height:1.5}
+.game{text-align:center;padding-bottom:12px}
+.game b{display:block;margin:10px 0 5px;font-size:14px}
+.events{display:grid;gap:10px}
+.event{padding:14px;display:flex;gap:12px;align-items:center}
+.date{background:#123b39;color:var(--g);padding:10px;border-radius:10px}
+.music{padding:16px;background:linear-gradient(135deg,#17243a,#202344);border-color:#286d64}
+audio{width:100%;margin-top:10px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0d1422;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:4}
+.bottom nav{width:min(600px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:8px}
+.bottom button{background:none;color:var(--muted);font-size:10px;padding:7px 3px}
+.bottom b{display:block;font-size:18px}
+.bottom .active{color:var(--g)}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:5;padding:15px;overflow:auto}
+.modal.show{display:flex;justify-content:center;align-items:flex-start}
+.box{background:#111b2d;border:1px solid var(--line);border-radius:17px;padding:18px;width:min(620px,100%);margin:auto}
+.field{margin:12px 0}
+.field label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+.field textarea{min-height:80px}
+.detail{color:#c6cfdd;line-height:1.8;white-space:pre-wrap}
+.detail img{width:100%;max-height:240px;object-fit:cover;border-radius:12px;margin:12px 0}
+.brand-wrap{min-width:0}
+.logo{font-size:29px;letter-spacing:.3px;display:inline-block;white-space:nowrap;background:linear-gradient(90deg,#20d6a0,#49b8ff,#c77dff,#ffcf65,#20d6a0);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logo-colors 5s linear infinite,logo-drift 3.8s ease-in-out infinite}
+.creator-line{display:flex;align-items:center;gap:7px;margin-top:5px;color:#b9c7dc;font-size:13px;font-weight:600;white-space:nowrap}
+.creator-line span{background:linear-gradient(90deg,#9aa8bd,#20d6a0,#b78cff,#9aa8bd);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:logo-colors 6s linear infinite}
+.creator-line i{width:5px;height:5px;border-radius:50%;background:#20d6a0;box-shadow:0 0 9px #20d6a0}
+.brand-dots{display:flex;gap:5px;margin-top:7px}
+.brand-dots b{width:5px;height:5px;border-radius:50%;background:#20d6a0}
+@keyframes logo-colors{to{background-position:300% 0}}
+@keyframes logo-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
+.tab-panel{display:none;min-height:65vh}
+.tab-panel.active{display:block}
+@media(min-width:700px){
+.grid,.games-grid{grid-template-columns:repeat(3,1fr)}
+.news img,.game img{height:175px}
+}
+</style>
 </head>
+
 <body>
-  <main>
-    <header>
-      <div>
-        <div class="brand-wrap">
-          <div class="logo"><span>GameVerse</span> 🎮</div>
-          <div class="creator-line"><i></i><span>Created by Venura Bashitha</span><i></i></div>
-          <div class="brand-dots"><b></b><b></b><b></b></div>
-        </div>
-      </div>
-      <!-- Admin බොත්තම: පාදයේ (Footer) වාර දෙකක් ක්ලික් කර password දුන් විට පෙන්වයි -->
-      <button id="adminBtn" class="dark" style="display:none;" onclick="openAdmin()">⚙ Admin</button>
-    </header>
+<main>
+<header>
+<div class="brand-wrap">
+<div class="logo">GameVerse 🎮</div>
+<div class="creator-line"><i></i><span>Created by Venura Bashitha</span><i></i></div>
+<div class="brand-dots"><b></b><b></b><b></b></div>
+</div>
+<button id="adminBtn" class="dark" style="display:none" onclick="openAdmin()">⚙ Admin</button>
+</header>
 
-    <section id="home" class="tab-panel active">
-      <section class="hero">
-        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200" alt="Gaming">
-        <div class="heroText">
-          <span class="tag">WELCOME TO GAMEVERSE SL</span>
-          <h1>Gaming ලෝකයේ අලුත්ම තොරතුරු එකම තැනකින්!</h1>
-          <p>Games • News • Updates • Events</p>
-          <button class="green" onclick="goTo('news')">Explore News →</button>
-        </div>
-      </section>
-    </section>
+<section id="home" class="tab-panel active">
+<section class="hero">
+<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200" alt="Gaming">
+<div class="heroText">
+<span class="tag">WELCOME TO GAMEVERSE SL</span>
+<h1>Gaming ලෝකයේ අලුත්ම තොරතුරු එකම තැනකින්!</h1>
+<p>Games • News • Updates • Events</p>
+<button class="green" onclick="goTo('news')">Explore News →</button>
+</div>
+</section>
+</section>
 
-    <section id="news" class="tab-panel">
-      <div class="search">
-        <input id="searchInput" placeholder="Game එකක් හෝ News එකක් සොයන්න..." oninput="renderNews()">
-        <button class="dark" onclick="document.getElementById('searchInput').value='';renderNews()">✕</button>
-      </div>
-      <div class="head">
-        <h2>📰 Latest Gaming News</h2>
-        <button class="read" onclick="setFilter('All')">View All →</button>
-      </div>
-      <div class="filters">
-        <button class="filter active" onclick="setFilter('All')">All</button>
-        <button class="filter" onclick="setFilter('GTA VI')">GTA VI</button>
-        <button class="filter" onclick="setFilter('Free Fire')">Free Fire</button>
-        <button class="filter" onclick="setFilter('PUBG')">PUBG</button>
-        <button class="filter" onclick="setFilter('Other')">Other</button>
-      </div>
-      <div class="grid" id="newsGrid"></div>
-    </section>
+<section id="news" class="tab-panel">
+<div class="search">
+<input id="searchInput" placeholder="Game එකක් හෝ News එකක් සොයන්න..." oninput="renderNews()">
+<button class="dark" onclick="document.getElementById('searchInput').value='';renderNews()">✕</button>
+</div>
+<div class="head">
+<h2>📰 Latest Gaming News</h2>
+<button class="read" onclick="setFilter('All')">View All →</button>
+</div>
+<div class="filters">
+<button class="filter active" onclick="setFilter('All')">All</button>
+<button class="filter" onclick="setFilter('GTA VI')">GTA VI</button>
+<button class="filter" onclick="setFilter('Free Fire')">Free Fire</button>
+<button class="filter" onclick="setFilter('PUBG')">PUBG</button>
+<button class="filter" onclick="setFilter('Other')">Other</button>
+</div>
+<div class="grid" id="newsGrid"></div>
+</section>
 
-    <section id="games" class="tab-panel">
-      <div class="head"><h2>🎮 Trending & New Games</h2></div>
-      <div class="games-grid" id="gamesGrid">
-        <!-- නව Games ලැයිස්තුව -->
-      </div>
-    </section>
+<section id="games" class="tab-panel">
+<div class="head"><h2>🎮 Trending & New Games</h2></div>
+<div class="games-grid" id="gamesGrid"></div>
+</section>
 
-    <section id="events" class="tab-panel">
-      <div class="head"><h2>📅 Upcoming Events</h2></div>
-      <div class="events" id="eventList"></div>
-    </section>
+<section id="events" class="tab-panel">
+<div class="head"><h2>📅 Upcoming Events</h2></div>
+<div class="events" id="eventList"></div>
+</section>
 
-    <section id="music" class="tab-panel">
-      <div class="head"><h2>🎵 Music Vibe</h2></div>
-      <div class="music">
-        <b>GameVerse Music Player</b>
-        <p class="muted">නරඹන්නන් සඳහා විශේෂිත ගීතය.</p>
-        <audio id="player" controls></audio>
-        <small id="musicHint" class="muted">ගීතය සූදානම් වෙමින් පවතී...</small>
-      </div>
-    </section>
+<section id="music" class="tab-panel">
+<div class="head"><h2>🎵 Music Vibe</h2></div>
+<div class="music">
+<b>GameVerse Music Player</b>
+<p class="muted">නරඹන්නන් සඳහා විශේෂිත ගීතය.</p>
+<audio id="player" controls></audio>
+<small id="musicHint" class="muted">ගීතය සූදානම් වෙමින් පවතී...</small>
+</div>
+</section>
 
-    <footer class="muted" style="text-align:center;padding:25px;cursor:pointer;" ondblclick="requestAdminAccess()" title="Double click here for Admin">GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)</footer>
-  </main>
+<footer class="muted" style="text-align:center;padding:25px;cursor:pointer" ondblclick="requestAdminAccess()">
+GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)
+</footer>
+</main>
 
-  <div class="bottom">
-    <nav>
-      <button class="active" onclick="navTo('home',this)"><b>⌂</b>Home</button>
-      <button onclick="navTo('news',this)"><b>▤</b>News</button>
-      <button onclick="navTo('games',this)"><b>🎮</b>Games</button>
-      <button onclick="navTo('events',this)"><b>♧</b>Events</button>
-      <button onclick="navTo('music',this)"><b>♫</b>Music</button>
-    </nav>
-  </div>
+<div class="bottom">
+<nav>
+<button class="active" onclick="navTo('home',this)"><b>⌂</b>Home</button>
+<button onclick="navTo('news',this)"><b>▤</b>News</button>
+<button onclick="navTo('games',this)"><b>🎮</b>Games</button>
+<button onclick="navTo('events',this)"><b>♧</b>Events</button>
+<button onclick="navTo('music',this)"><b>♫</b>Music</button>
+</nav>
+</div>
 
-  <div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
-    <div class="box">
-      <div class="head">
-        <h2 id="detailTitle"></h2>
-        <button class="dark" onclick="closeModal('detailModal')">✕</button>
-      </div>
-      <div class="detail">
-        <img id="detailImage" alt="">
-        <span id="detailTag" class="tag"></span>
-        <p id="detailText"></p>
-      </div>
-    </div>
-  </div>
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
+<div class="box">
+<div class="head">
+<h2 id="detailTitle"></h2>
+<button class="dark" onclick="closeModal('detailModal')">✕</button>
+</div>
+<div class="detail">
+<img id="detailImage" alt="">
+<span id="detailTag" class="tag"></span>
+<p id="detailText"></p>
+</div>
+</div>
+</div>
 
-  <div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')">
-    <div class="box">
-      <div class="head">
-        <h2>⚙ Admin Panel</h2>
-        <button class="dark" onclick="closeModal('adminModal')">✕</button>
-      </div>
-      <p class="muted">News, Events සහ Music link එකතු කරන්න. මෙය ඔබගේ browser එකේ save වේ.</p>
-      
-      <h3>➕ Add News</h3>
-      <div class="field"><label>News Title</label><input id="nTitle" placeholder="News මාතෘකාව"></div>
-      <div class="field"><label>Category</label><select id="nCategory"><option>GTA VI</option><option>Free Fire</option><option>PUBG</option><option>Other</option></select></div>
-      <div class="field"><label>Photo URL</label><input id="nImage" placeholder="https://..."></div>
-      <div class="field"><label>Short Description</label><textarea id="nShort"></textarea></div>
-      <div class="field"><label>Full News</label><textarea id="nFull"></textarea></div>
-      <button class="green" onclick="addNews()">Publish News</button>
+<div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')">
+<div class="box">
+<div class="head">
+<h2>⚙ Admin Panel</h2>
+<button class="dark" onclick="closeModal('adminModal')">✕</button>
+</div>
+<p class="muted">News, Events සහ Music link එකතු කරන්න. දත්ත Browser එකේ Save වේ.</p>
 
-      <h3>📅 Add Event</h3>
-      <div class="field"><label>Event Name</label><input id="eTitle"></div>
-      <div class="field"><label>Date</label><input id="eDate" type="date"></div>
-      <div class="field"><label>Description</label><input id="eDesc"></div>
-      <button class="green" onclick="addEvent()">Add Event</button>
+<h3>➕ Add News</h3>
+<div class="field"><label>News Title</label><input id="nTitle" placeholder="News මාතෘකාව"></div>
+<div class="field"><label>Category</label><select id="nCategory"><option>GTA VI</option><option>Free Fire</option><option>PUBG</option><option>Other</option></select></div>
+<div class="field"><label>Photo URL</label><input id="nImage" placeholder="https://..."></div>
+<div class="field"><label>Short Description</label><textarea id="nShort"></textarea></div>
+<div class="field"><label>Full News</label><textarea id="nFull"></textarea></div>
+<button class="green" onclick="addNews()">Publish News</button>
 
-      <h3>🎵 Music URL (MP3)</h3>
-      <div class="field"><input id="musicUrl" placeholder="https://.../song.mp3"></div>
-      <button class="green" onclick="saveMusic()">Save Music</button>
-      
-      <h3>🗑 Manage News</h3>
-      <div id="manageNews"></div>
-    </div>
-  </div>
+<h3>📅 Add Event</h3>
+<div class="field"><label>Event Name</label><input id="eTitle"></div>
+<div class="field"><label>Date</label><input id="eDate" type="date"></div>
+<div class="field"><label>Description</label><input id="eDesc"></div>
+<button class="green" onclick="addEvent()">Add Event</button>
 
-  <script>
-    const starterNews = [
-      {id:1, category:'GTA VI', title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥', short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.', full:'GTA VI පිළිබඳ නිල තොරතුරු සහ ලෝක ප්‍රසිද්ධ Map එක පිළිබඳ අලුත්ම විස්තර මෙහි අඩංගු වේ.', image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
-      {id:2, category:'Free Fire', title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆', short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.', full:'ශ්‍රී ලංකා ක්‍රීඩකයින් සඳහා විශේෂිත Free Fire තරඟාවලි සහ නවතම patch notes.', image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
-      {id:3, category:'PUBG', title:'PUBG Mobile – අලුත් Updates', short:'PUBG Mobile updates සහ events ගැන දැනගන්න.', full:'නවීන ආයුධ සහ නව map එකක් සමඟින් පැමිණෙන PUBG Mobile අලුත්ම update එක.', image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}
-    ];
+<h3>🎵 Music URL (MP3)</h3>
+<div class="field"><input id="musicUrl" placeholder="https://.../song.mp3"></div>
+<button class="green" onclick="saveMusic()">Save Music</button>
 
-    // සැබෑ නවතම Games ලැයිස්තුව
-    const trendingGames = [
-      {title:'GTA VI', tag:'Open World / Action', img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900', desc:'Rockstar Games විසින් නිර්මාණය කරන ලද ලොව වඩාත්ම අපේක්ෂිත Open World ක්‍රීඩාව.'},
-      {title:'Free Fire', tag:'Battle Royale', img:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900', desc:'මൊබයිල් ක්‍රීඩකයින් අතර අතිශය ජනප්‍රිය වේගවත් Battle Royale ක්‍රීඩාවක්.'},
-      {title:'PUBG Mobile', tag:'Tactical Shooter', img:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900', desc:'උපායශීලී යුධ පිටි අත්දැකීමක් ලබාදෙන ජනප්‍රියම ජංගම දුරකථන ක්‍රීඩාව.'},
-      {title:'Black Myth: Wukong', tag:'Action RPG', img:'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900', desc:'චීන පුරාවෘත්ත මත පදනම් වූ විශ්මයජනක ග්‍රැෆික්ස් සහිත අලුත්ම ක්‍රීඩාව.'},
-      {title:'Valorant', tag:'Tactical FPS', img:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900', desc:'විශේෂ බලතල සහිත වීරයන් එකිනෙකා සමඟ සටන් වැදෙන ප්‍රසිද්ධ PC ක්‍රීඩාවක්.'},
-      {title:'Minecraft', tag:'Sandbox / Survival', img:'https://images.unsplash.com/photo-1627856013091-fed6e4e30e52?w=900', desc:'ඔබේ පරිකල්පනයට අනුව ඕනෑම ලෝකයක් නිර්මාණය කළ හැකි සදාකාලික ජනප්‍රිය ක්‍රීඩාවක්.'}
-    ];
-    
-    let news = JSON.parse(localStorage.getItem('gv_news') || 'null') || starterNews,
-        events = JSON.parse(localStorage.getItem('gv_events') || '[]'),
-        filter = 'All';
+<h3>🗑 Manage News</h3>
+<div id="manageNews"></div>
+</div>
+</div>
 
-    function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-    function persist() {
-      localStorage.setItem('gv_news', JSON.stringify(news));
-      localStorage.setItem('gv_events', JSON.stringify(events));
-    }
-    
-    function renderNews() {
-      let searchVal = document.getElementById('searchInput').value.toLowerCase();
-      let a = news.filter(n => (filter === 'All' || n.category === filter) && (n.title + ' ' + n.short + ' ' + n.category).toLowerCase().includes(searchVal));
-      let newsGrid = document.getElementById('newsGrid');
-      newsGrid.innerHTML = a.length ? a.map(n => `<article class="news"><img src="${esc(n.image)}" alt=""><div class="body"><span class="tag">${esc(n.category)}</span><h3>${esc(n.title)}</h3><p>${esc(n.short)}</p><button class="read" onclick="openDetail(${n.id})">Read More →</button></div></article>`).join('') : '<p class="muted">News හමු වුණේ නැහැ.</p>';
-      renderManage();
-    }
-    
-    function setFilter(f) {
-      filter = f;
-      document.querySelectorAll('.filter').forEach(b => b.classList.toggle('active', b.textContent.trim() === f));
-      renderNews();
-    }
-    
-    function openDetail(id) {
-      let n = news.find(x => x.id === id);
-      if(!n) return;
-      document.getElementById('detailTitle').textContent = n.title;
-      document.getElementById('detailImage').src = n.image;
-      document.getElementById('detailTag').textContent = n.category;
-      document.getElementById('detailText').textContent = n.full;
-      document.getElementById('detailModal').classList.add('show');
-    }
+<script>
+const starterNews = [
+{id:1,category:'GTA VI',title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥',short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.',full:'GTA VI පිළිබඳ නිල තොරතුරු සහ Map එක පිළිබඳ විස්තර මෙහි අඩංගු වේ.',image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
+{id:2,category:'Free Fire',title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆',short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.',full:'ශ්‍රී ලංකා ක්‍රීඩකයින් සඳහා විශේෂිත Free Fire තරඟාවලි සහ නවතම patch notes.',image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
+{id:3,category:'PUBG',title:'PUBG Mobile – අලුත් Updates',short:'PUBG Mobile updates සහ events ගැන දැනගන්න.',full:'PUBG Mobile අලුත්ම update එක පිළිබඳ තොරතුරු.',image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}
+];
 
-    function openGameDetail(index) {
-      let g = trendingGames[index];
-      document.getElementById('detailTitle').textContent = g.title;
-      document.getElementById('detailImage').src = g.img;
-      document.getElementById('detailTag').textContent = g.tag;
-      document.getElementById('detailText').textContent = g.desc;
-      document.getElementById('detailModal').classList.add('show');
-    }
+const trendingGames = [
+{title:'GTA VI',tag:'Open World / Action',img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900',desc:'Rockstar Games හි අපේක්ෂිත Open World ක්‍රීඩාව.'},
+{title:'Free Fire',tag:'Battle Royale',img:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900',desc:'ජනප්‍රිය Battle Royale ක්‍රීඩාවක්.'},
+{title:'PUBG Mobile',tag:'Tactical Shooter',img:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900',desc:'ජනප්‍රිය ජංගම දුරකථන ක්‍රීඩාවක්.'},
+{title:'Black Myth: Wukong',tag:'Action RPG',img:'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900',desc:'චීන පුරාවෘත්ත මත පදනම් වූ ක්‍රීඩාවක්.'},
+{title:'Valorant',tag:'Tactical FPS',img:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900',desc:'විශේෂ බලතල සහිත වීරයන් සිටින PC ක්‍රීඩාවක්.'},
+{title:'Minecraft',tag:'Sandbox / Survival',img:'https://images.unsplash.com/photo-1627856013091-fed6e4e30e52?w=900',desc:'ඔබේම ලෝකයක් නිර්මාණය කළ හැකි ක්‍රීඩාවක්.'}
+];
 
-    function renderGames() {
-      let grid = document.getElementById('gamesGrid');
-      grid.innerHTML = trendingGames.map((g, idx) => `
-        <div class="game" onclick="openGameDetail(${idx})" style="cursor:pointer;">
-          <img src="${g.img}" alt="${g.title}">
-          <b>${g.title}</b>
-          <span class="tag">${g.tag}</span>
-        </div>
-      `).join('');
-    }
+let news = JSON.parse(localStorage.getItem('gv_news') || 'null') || starterNews;
+let events = JSON.parse(localStorage.getItem('gv_events') || '[]');
+let filter = 'All';
 
-    function requestAdminAccess() {
-      let pass = prompt("Admin Password එක ඇතුළත් කරන්න:");
-      if (pass === "admin123") {
-        document.getElementById('adminBtn').style.display = 'block';
-        alert("Admin අවසරය සාර්ථකයි! දැන් ඉහළ දකුණු කෙළවරේ ඇති Admin බටන් එක ක්ලික් කරන්න.");
-      } else if (pass !== null) {
-        alert("වැරදි මුරපදයක්!");
-      }
-    }
+function esc(s) {
+return String(s || '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
-    function openAdmin() { document.getElementById('adminModal').classList.add('show'); renderManage(); }
-    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-    
-    function addNews() {
-      let title = document.getElementById('nTitle').value;
-      let short = document.getElementById('nShort').value;
-      if (!title.trim() || !short.trim()) { alert('News Title සහ Short Description දාන්න.'); return; }
-      news.unshift({
-        id: Date.now(),
-        category: document.getElementById('nCategory').value,
-        title: title,
-        short: short,
-        full: document.getElementById('nFull').value || short,
-        image: document.getElementById('nImage').value || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'
-      });
-      persist();
-      renderNews();
-      ['nTitle', 'nShort', 'nFull', 'nImage'].forEach(id => document.getElementById(id).value = '');
-      alert('News එක Publish කළා!');
-    }
-    
-    function renderManage() {
-      let manageNews = document.getElementById('manageNews');
-      manageNews.innerHTML = news.map(n => `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #26344b"><span>${esc(n.title)}</span><button class="dark" onclick="deleteNews(${n.id})">Delete</button></div>`).join('');
-    }
-    
-    function deleteNews(id) {
-      if (confirm('මේ News එක මකන්නද?')) {
-        news = news.filter(n => n.id !== id);
-        persist();
-        renderNews();
-      }
-    }
-    
-    function addEvent() {
-      let title = document.getElementById('eTitle').value;
-      if (!title.trim()) { alert('Event නම දාන්න.'); return; }
-      events.push({ title: title, date: document.getElementById('eDate').value, desc: document.getElementById('eDesc').value });
-      persist();
-      renderEvents();
-      ['eTitle', 'eDate', 'eDesc'].forEach(id => document.getElementById(id).value = '');
-      alert('Event එක එකතු කළා!');
-    }
-    
-    function renderEvents() {
-      le
+function persist() {
+localStorage.setItem('gv_news',JSON.stringify(news));
+localStorage.setItem('gv_events',JSON.stringify(events));
+}
+
+function renderNews() {
+const searchVal=document.getElementById('searchInput').value.toLowerCase();
+const a=news.filter(n=>(filter==='All'||n.category===filter)&&(n.title+' '+n.short+' '+n.category).toLowerCase().includes(searchVal));
+document.getElementById('newsGrid').innerHTML=a.length?a.map(n=>`
+<article class="news">
+<img src="${esc(n.image)}" alt="">
+<div class="body">
+<span class="tag">${esc(n.category)}</span>
+<h3>${esc(n.title)}</h3>
+<p>${esc(n.short)}</p>
+<button class="read" onclick="openDetail(${n.id})">Read More →</button>
+</div>
+</article>`).join(''):'<p class="muted">News හමු වුණේ නැහැ.</p>';
+renderManage();
+}
+
+function setFilter(f) {
+filter=f;
+document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.textContent.trim()===f));
+renderNews();
+}
+
+function openDetail(id) {
+const n=news.find(x=>x.id===id);
+if(!n)return;
+document.getElementById('detailTitle').textContent=n.title;
+document.getElementById('detailImage').src=n.image;
+document.getElementById('detailTag').textContent=n.category;
+document.getElementById('detailText').textContent=n.full;
+document.getElementById('detailModal').classList.add('show');
+}
+
+function openGameDetail(index) {
+const g=trendingGames[index];
+document.getElementById('detailTitle').textContent=g.title;
+document.getElementById('detailImage').src=g.img;
+document.getElementById('detailTag').textContent=g.tag;
+document.getElementById('detailText').textContent=g.desc;
+document.getElementById('detailModal').classList.add('show');
+}
+
+function renderGames() {
+document.getElementById('gamesGrid').innerHTML=trendingGames.map((g,idx)=>`
+<div class="game" onclick="openGameDetail(${idx})" style="cursor:pointer">
+<img src="${g.img}" alt="${esc(g.title)}">
+<b>${esc(g.title)}</b>
+<span class="tag">${esc(g.tag)}</span>
+</div>`).join('');
+}
+
+function requestAdminAccess() {
+const pass=prompt('Admin Password එක ඇතුළත් කරන්න:');
+if(pass==='admin123') {
+document.getElementById('adminBtn').style.display='block';
+alert('Admin අවසරය සාර්ථකයි!');
+} else if(pass!==null) {
+alert('වැරදි මුරපදයක්!');
+}
+}
+
+function openAdmin() {
+document.getElementById('adminModal').classList.add('show');
+renderManage();
+}
+
+function closeModal(id) {
+document.getElementById(id).classList.remove('show');
+}
+
+function addNews() {
+const title=document.getElementById('nTitle').value;
+const short=document.getElementById('nShort').value;
+if(!title.trim()||!short.trim()) {
+alert('News Title සහ Short Description දාන්න.');
+return;
+}
+news.unshift({
+id:Date.now(),
+category:document.getElementById('nCategory').value,
+title:title,
+short:short,
+full:document.getElementById('nFull').value||short,
+image:document.getElementById('nImage').value||'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'
+});
+persist();
+renderNews();
+['nTitle','nShort','nFull','nImage'].forEach(id=>document.getElementById(id).value='');
+alert('News එක Publish කළා!');
+}
+
+function renderManage() {
+document.getElementById('manageNews').innerHTML=news.map(n=>`
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #26344b">
+<span>${esc(n.title)}</span>
+<button class="dark" onclick="deleteNews(${n.id})">Delete</button>
+</div>`).join('');
+}
+
+function deleteNews(id) {
+if(confirm('මේ News එක මකන්නද?')) {
+news=news.filter(n=>n.id!==id);
+persist();
+renderNews();
+}
+}
+
+function addEvent() {
+const title=document.getElementById('eTitle').value;
+if(!title.trim()) {
+alert('Event නම දාන්න.');
+return;
+}
+events.push({
+title:title,
+date:document.getElementById('eDate').value,
+desc:document.getElementById('eDesc').value
+});
+persist();
+renderEvents();
+['eTitle','eDate','eDesc'].forEach(id=>document.getElementById(id).value='');
+alert('Event එක එකතු කළා!');
+}
+
+function renderEvents() {
+const list=document.getElementById('eventList');
+if(!events.length) {
+list.innerHTML='<p class="muted">දැනට Events නැහැ.</p>';
+return;
+}
+list.innerHTML=events.map((e,i)=>`
+<div class="event">
+<div class="date">📅<br>${esc(e.date||'TBA')}</div>
+<div style="flex:1">
+<b>${esc(e.title)}</b>
+<p class="muted">${esc(e.desc||'')}</p>
+</div>
+<button class="dark" onclick="deleteEvent(${i})">✕</button>
+</div>`).join('');
+}
+
+function deleteEvent(index) {
+if(confirm('මේ Event එක මකන්නද?')) {
+events.splice(index,1);
+persist();
+renderEvents();
+}
+}
+
+function saveMusic() {
+const url=document.getElementById('musicUrl').value.trim();
+if(!url) {
+alert('Music URL එක ඇතුළත් කරන්න.');
+return;
+}
+if(!/^https?:\/\//i.test(url)) {
+alert('නිවැරදි URL එකක් ඇතුළත් කරන්න.');
+return;
+}
+localStorage.setItem('gv_music',url);
+loadMusic();
+alert('Music URL එක Save කළා!');
+}
+
+function loadMusic() {
+const url=localStorage.getItem('gv_music');
+const player=document.getElementById('player');
+const hint=document.getElementById('musicHint');
+if(url) {
+player.src=url;
+hint.textContent='Music Player සූදානම්!';
+} else {
+player.removeAttribute('src');
+hint.textContent='Admin Panel එකෙන් MP3 URL එකක් එකතු කරන්න.';
+}
+}
+
+function navTo(id,button) {
+document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.bottom nav button').forEach(b=>b.classList.remove('active'));
+if(button)button.classList.add('active');
+if(id==='news')renderNews();
+if(id==='games')renderGames();
+if(id==='events')renderEvents();
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goTo(id) {
+const ids=['home','news','games','events','music'];
+const buttons=document.querySelectorAll('.bottom nav button');
+const index=ids.indexOf(id);
+navTo(id,index>=0?buttons[index]:null);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+renderNews();
+renderGames();
+renderEvents();
+loadMusic();
+});
+</script>
+</body>
+</html>
