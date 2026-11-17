@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GameVerse - By Venura</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>GameVerse - Venura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -16,306 +15,202 @@
         }
 
         body {
-            width: 100vw;
-            min-height: 100vh;
-            background-color: #010204;
+            background-color: #0b0f19;
             color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        .app-container {
-            width: 100%;
+            padding: 16px;
             max-width: 480px;
-            background: #06080e;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
-            overflow: hidden;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            max-height: 850px;
-            position: relative;
+            margin: 0 auto;
         }
 
         header {
-            background: linear-gradient(180deg, #0d111a, #06080e);
-            padding: 18px 14px;
             text-align: center;
-            border-bottom: 1px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .header-robot {
-            font-size: 18px;
-            color: #10b981;
-            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
-            animation: pulseRobot 2s infinite;
-        }
-
-        @keyframes pulseRobot {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
-
-        .header-center {
-            flex: 1;
-            padding: 0 8px;
+            padding: 20px 0;
+            border-bottom: 1px solid #1f293d;
+            margin-bottom: 16px;
         }
 
         header h1 {
-            font-size: 20px;
-            color: #ffffff;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        header h1 span {
+            font-size: 22px;
             color: #10b981;
-            text-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
-        }
-
-        /* Typing Animation for Venura */
-        .typing-container {
-            font-size: 11px;
-            color: #34d399;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid #10b981;
-            width: 0;
-            margin: 0 auto;
-            animation: typing 3s steps(25, end) forwards, blink 0.75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink {
-            from, to { border-color: transparent; }
-            50% { border-color: #10b981; }
-        }
-
-        .content-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            padding-bottom: 85px;
-        }
-
-        .tab-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h2 {
-            font-size: 15px;
-            margin-bottom: 14px;
-            color: #f3f4f6;
-            border-left: 3px solid #10b981;
-            padding-left: 8px;
             font-weight: 700;
         }
 
+        header p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
         .card {
-            background: linear-gradient(145deg, #0d1017, #080a10);
+            background: #131b2e;
             padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #1f293d;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #f3f4f6;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 12px;
+            color: #9ca3af;
+            line-height: 1.5;
         }
 
         .badge {
             background: rgba(16, 185, 129, 0.15);
             color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 9px;
-            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
             display: inline-block;
             margin-bottom: 8px;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 11px;
-            background: #030406;
-            border: 1px solid #1a2234;
-            color: white;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            outline: none;
-            font-size: 12px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #10b981, #047857);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            width: 100%;
-            font-size: 12px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
-        }
-
-        nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #030406;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid rgba(16, 185, 129, 0.15);
-            z-index: 1000;
-            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.9);
-        }
-
-        nav button {
-            background: none;
-            border: none;
-            color: #4b5563;
-            font-size: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            flex: 1;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        nav button i {
-            font-size: 17px;
-            margin-bottom: 3px;
-        }
-
-        nav button.active, nav button:hover {
-            color: #10b981;
-            transform: scale(1.06);
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <header>
-            <i class="fa-solid fa-gamepad header-robot"></i>
-            <div class="header-center">
-                <h1>Game<span>Verse</span> 🎮</h1>
-                <div class="typing-container">Created by Venura</div>
-            </div>
-            <i class="fa-solid fa-bolt header-robot"></i>
-        </header>
+    <header>
+        <h1>GameVerse 🎮</h1>
+        <p>Created by Venura</p>
+    </header>
 
-        <div class="content-body">
-            
-            <!-- NEWS TAB -->
-            <div id="tab-news" class="tab-content active">
-                <h2>📰 Gaming Updates</h2>
-                
-                <div class="card" style="border-left: 4px solid #f43f5e;">
-                    <span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #fb7185; border-color: rgba(244, 63, 94, 0.4);">MEGA UPDATE</span>
-                    <h3 style="font-size: 13px; margin-top: 4px; color:#f8fafc;">🔥 GTA VI නවතම තොරතුරු</h3>
-                    <p style="font-size: 11px; color: #9ca3af; margin-top: 6px; line-height: 1.6;">
-                        • Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් (Vice City) සහ Lucia & Jason ප්‍රධාන චරිත හඳුන්වා දී ඇත.<br>
-                        • අති උසස් Graphics සමඟින් ඉදිරියේදී නිකුත් වීමට නියමිතයි!
-                    </p>
-                </div>
-
-                <div class="card">
-                    <span class="badge">HOT NEWS</span>
-                    <h3 style="font-size: 13px; margin-top: 4px; color:#f8fafc;">Free Fire ශ්‍රී ලංකා කුසලානය</h3>
-                    <p style="font-size: 11px; color: #9ca3af; margin-top: 5px; line-height: 1.5;">මෙම මස අවසානයේදී පැවැත්වෙන තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි.</p>
-                </div>
-            </div>
-
-            <!-- FINDER TAB -->
-            <div id="tab-finder" class="tab-content">
-                <h2>🎮 Phone Game Finder</h2>
-                <div class="card">
-                    <label>ඔබේ Phone එකේ RAM ප්‍රමාණය:</label>
-                    <select id="ram-val">
-                        <option value="2">2 GB RAM (Low-End)</option>
-                        <option value="4">4 GB RAM (Mid-Range)</option>
-                        <option value="8">8 GB හෝ වැඩි (Pro/High-End)</option>
-                    </select>
-
-                    <button class="btn" onclick="findGames()">ගැලපෙන Games සොයන්න</button>
-                </div>
-                <div id="finder-results"></div>
-            </div>
-
-            <!-- TASKS TAB -->
-            <div id="tab-tasks" class="tab-content">
-                <h2>📋 Daily Tasks & Wallet</h2>
-                <div class="card" style="text-align: center; padding: 20px;">
-                    <h4 style="font-size: 12px; color: #34d399;">Total Coins</h4>
-                    <h2 style="font-size: 24px; margin: 5px 0; border:none; padding:0;">150 Coins</h2>
-                    <p style="font-size: 11px; color: #9ca3af;">දිනපතා tasks සම්පූර්ණ කර coins එකතු කරගන්න!</p>
-                </div>
-            </div>
-
-        </div>
-
-        <nav>
-            <button onclick="switchTab('news')" class="active" id="nav-news"><i class="fa-solid fa-newspaper"></i><span>News</span></button>
-            <button onclick="switchTab('finder')" id="nav-finder"><i class="fa-solid fa-gamepad"></i><span>Finder</span></button>
-            <button onclick="switchTab('tasks')" id="nav-tasks"><i class="fa-solid fa-fire"></i><span>Tasks</span></button>
-        </nav>
-
+    <div class="card">
+        <span class="badge">GTA VI UPDATE</span>
+        <h3>🔥 නවතම තොරතුරු</h3>
+        <p>Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් සහ ප්‍රධාන චරිත හඳුන්වා දී ඇත. ඉදිරියේදී වැඩිදුර විස්තර එකතු වේ.</p>
     </div>
 
-    <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('nav-' + tabId).classList.add('active');
+    <div class="card">
+        <span class="badge">FREE FIRE</span>
+        <h3>🏆 ශ්‍රී ලංකා කුසලානය</h3>
+        <p>මෙම මස පැවැත්වෙන තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි. ඉක්මනින් සම්බන්ධ වන්න.</p>
+    </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GameVerse - Venura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        function findGames() {
-            let ram = document.getElementById('ram-val').value;
-            let resDiv = document.getElementById('finder-results');
-            
-            let html = `<div class="card" style="border-left: 4px solid #10b981;">`;
-            if(ram == "2") {
-                html += `<h3 style="font-size:12px; color:#34d399;">🟢 Low-End Games:</h3>
-                         <p style="font-size:11px; color:#9ca3af; margin-top:6px;">• Free Fire<br>• Subway Surfers<br>• Carrom Pool</p>`;
-            } else if(ram == "4") {
-                html += `<h3 style="font-size:12px; color:#fbbf24;">🟡 Mid-Range Games:</h3>
-                         <p style="font-size:11px; color:#9ca3af; margin-top:6px;">• Free Fire MAX<br>• COD Mobile (Low)<br>• PUBG Mobile</p>`;
-            } else {
-                html += `<h3 style="font-size:12px; color:#f43f5e;">🔥 High-End Games:</h3>
-                         <p style="font-size:11px; color:#9ca3af; margin-top:6px;">• CarX Street<br>• Genshin Impact<br>• Warzone Mobile</p>`;
-            }
-            html += `</div>`;
-            resDiv.innerHTML = html;
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            padding: 16px;
+            max-width: 480px;
+            margin: 0 auto;
         }
-    </script>
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #1f293d;
+            margin-bottom: 16px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .card {
+            background: #131b2e;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #1f293d;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #f3f4f6;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 12px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        .badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* Music Player Style */
+        .music-player {
+            background: linear-gradient(135deg, #131b2e, #1f293d);
+            border: 1px solid #10b981;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+            outline: none;
+            filter: invert(100%) hue-rotate(180deg) brightness(1.5);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>GameVerse 🎮</h1>
+        <p>Created by Venura</p>
+    </header>
+
+    <!-- MUSIC PLAYER SECTION -->
+    <div class="card music-player">
+        <span class="badge">MUSIC VIBE 🎵</span>
+        <h3>සිංහල සින්දු Player</h3>
+        <p>ගේම්ස් බලන ගමන් සිංහල සින්ඩුවක් අහන්න:</p>
+        <audio controls>
+            <source src="https://www.soundhelix.examples/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <div class="card">
+        <span class="badge">GTA VI UPDATE</span>
+        <h3>🔥 නවතම තොරතුරු</h3>
+        <p>Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් සහ ප්‍රධාන චරිත හඳුන්වා දී ඇත. ඉදිරියේදී වැඩිදුර විස්තර එකතු වේ.</p>
+    </div>
+
+    <div class="card">
+        <span class="badge">FREE FIRE</span>
+        <h3>🏆 ශ්‍රී ලංකා කුසලානය</h3>
+        <p>මෙම මස පැවැත්වෙන තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි. ඉක්මනින් සම්බන්ධ වන්න.</p>
+    </div>
+
 </body>
 </html>
