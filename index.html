@@ -8,13 +8,7 @@
 <title>GameVerse SL</title>
 
 <style>
-:root {
---bg:#0b1020;
---card:#141e31;
---line:#26344b;
---g:#20d6a0;
---muted:#9aa8bd;
-}
+:root{--bg:#0b1020;--card:#141e31;--line:#26344b;--g:#20d6a0;--muted:#9aa8bd}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:#f5f7fb;font-family:Arial,sans-serif}
 main{max-width:1000px;margin:auto;padding:18px 16px 90px}
@@ -50,7 +44,8 @@ button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:
 .event{padding:14px;display:flex;gap:12px;align-items:center}
 .date{background:#123b39;color:var(--g);padding:10px;border-radius:10px}
 .music{padding:16px;background:linear-gradient(135deg,#17243a,#202344);border-color:#286d64}
-audio{width:100%;margin-top:10px}
+.player-wrap{position:relative;width:100%;aspect-ratio:16/9;margin-top:15px;background:#050914;border-radius:12px;overflow:hidden}
+.player-wrap iframe{width:100%;height:100%;border:0}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#0d1422;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:4}
 .bottom nav{width:min(600px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:8px}
 .bottom button{background:none;color:var(--muted);font-size:10px;padding:7px 3px}
@@ -75,10 +70,7 @@ audio{width:100%;margin-top:10px}
 @keyframes logo-drift{0%,100%{transform:translateX(0)}50%{transform:translateX(9px)}}
 .tab-panel{display:none;min-height:65vh}
 .tab-panel.active{display:block}
-@media(min-width:700px){
-.grid,.games-grid{grid-template-columns:repeat(3,1fr)}
-.news img,.game img{height:175px}
-}
+@media(min-width:700px){.grid,.games-grid{grid-template-columns:repeat(3,1fr)}.news img,.game img{height:175px}}
 </style>
 </head>
 
@@ -138,9 +130,17 @@ audio{width:100%;margin-top:10px}
 <div class="head"><h2>🎵 Music Vibe</h2></div>
 <div class="music">
 <b>GameVerse Music Player</b>
-<p class="muted">නරඹන්නන් සඳහා විශේෂිත ගීතය.</p>
-<audio id="player" controls></audio>
-<small id="musicHint" class="muted">ගීතය සූදානම් වෙමින් පවතී...</small>
+<p class="muted">GameVerse SL සඳහා විශේෂිත ගීතය ❤️</p>
+<div class="player-wrap">
+<iframe id="youtubePlayer"
+src="https://www.youtube-nocookie.com/embed/LSCx8JJEuVQ?autoplay=1&playsinline=1&rel=0"
+title="GameVerse Music"
+allow="autoplay; encrypted-media; picture-in-picture"
+allowfullscreen>
+</iframe>
+</div>
+<p id="musicHint" class="muted">🎵 YouTube ගීතය සූදානම්.</p>
+<button class="green" onclick="playMusic()">▶ Play Song</button>
 </div>
 </section>
 
@@ -195,8 +195,11 @@ GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)
 <div class="field"><label>Description</label><input id="eDesc"></div>
 <button class="green" onclick="addEvent()">Add Event</button>
 
-<h3>🎵 Music URL (MP3)</h3>
-<div class="field"><input id="musicUrl" placeholder="https://.../song.mp3"></div>
+<h3>🎵 YouTube Music Link</h3>
+<div class="field">
+<label>YouTube URL</label>
+<input id="musicUrl" placeholder="https://youtu.be/VIDEO_ID">
+</div>
 <button class="green" onclick="saveMusic()">Save Music</button>
 
 <h3>🗑 Manage News</h3>
@@ -205,13 +208,15 @@ GameVerse SL 🎮<br>Created by Venura (Double click here for Admin)
 </div>
 
 <script>
-const starterNews = [
+const DEFAULT_VIDEO_ID='LSCx8JJEuVQ';
+
+const starterNews=[
 {id:1,category:'GTA VI',title:'GTA VI ගැන අලුත්ම තොරතුරු 🔥',short:'Rockstar Games සහ GTA VI ගැන අලුත්ම gaming තොරතුරු කියවන්න.',full:'GTA VI පිළිබඳ නිල තොරතුරු සහ Map එක පිළිබඳ විස්තර මෙහි අඩංගු වේ.',image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900'},
 {id:2,category:'Free Fire',title:'Free Fire – ශ්‍රී ලංකා කුසලානය 🏆',short:'ශ්‍රී ලංකාවේ Free Fire තරඟාවලි සහ gaming updates.',full:'ශ්‍රී ලංකා ක්‍රීඩකයින් සඳහා විශේෂිත Free Fire තරඟාවලි සහ නවතම patch notes.',image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'},
 {id:3,category:'PUBG',title:'PUBG Mobile – අලුත් Updates',short:'PUBG Mobile updates සහ events ගැන දැනගන්න.',full:'PUBG Mobile අලුත්ම update එක පිළිබඳ තොරතුරු.',image:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900'}
 ];
 
-const trendingGames = [
+const trendingGames=[
 {title:'GTA VI',tag:'Open World / Action',img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900',desc:'Rockstar Games හි අපේක්ෂිත Open World ක්‍රීඩාව.'},
 {title:'Free Fire',tag:'Battle Royale',img:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900',desc:'ජනප්‍රිය Battle Royale ක්‍රීඩාවක්.'},
 {title:'PUBG Mobile',tag:'Tactical Shooter',img:'https://images.unsplash.com/photo-1493711662062-fa541f7f2f4e?w=900',desc:'ජනප්‍රිය ජංගම දුරකථන ක්‍රීඩාවක්.'},
@@ -220,20 +225,20 @@ const trendingGames = [
 {title:'Minecraft',tag:'Sandbox / Survival',img:'https://images.unsplash.com/photo-1627856013091-fed6e4e30e52?w=900',desc:'ඔබේම ලෝකයක් නිර්මාණය කළ හැකි ක්‍රීඩාවක්.'}
 ];
 
-let news = JSON.parse(localStorage.getItem('gv_news') || 'null') || starterNews;
-let events = JSON.parse(localStorage.getItem('gv_events') || '[]');
-let filter = 'All';
+let news=JSON.parse(localStorage.getItem('gv_news')||'null')||starterNews;
+let events=JSON.parse(localStorage.getItem('gv_events')||'[]');
+let filter='All';
 
-function esc(s) {
-return String(s || '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function esc(s){
+return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-function persist() {
+function persist(){
 localStorage.setItem('gv_news',JSON.stringify(news));
 localStorage.setItem('gv_events',JSON.stringify(events));
 }
 
-function renderNews() {
+function renderNews(){
 const searchVal=document.getElementById('searchInput').value.toLowerCase();
 const a=news.filter(n=>(filter==='All'||n.category===filter)&&(n.title+' '+n.short+' '+n.category).toLowerCase().includes(searchVal));
 document.getElementById('newsGrid').innerHTML=a.length?a.map(n=>`
@@ -249,13 +254,13 @@ document.getElementById('newsGrid').innerHTML=a.length?a.map(n=>`
 renderManage();
 }
 
-function setFilter(f) {
+function setFilter(f){
 filter=f;
 document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.textContent.trim()===f));
 renderNews();
 }
 
-function openDetail(id) {
+function openDetail(id){
 const n=news.find(x=>x.id===id);
 if(!n)return;
 document.getElementById('detailTitle').textContent=n.title;
@@ -265,7 +270,7 @@ document.getElementById('detailText').textContent=n.full;
 document.getElementById('detailModal').classList.add('show');
 }
 
-function openGameDetail(index) {
+function openGameDetail(index){
 const g=trendingGames[index];
 document.getElementById('detailTitle').textContent=g.title;
 document.getElementById('detailImage').src=g.img;
@@ -274,7 +279,7 @@ document.getElementById('detailText').textContent=g.desc;
 document.getElementById('detailModal').classList.add('show');
 }
 
-function renderGames() {
+function renderGames(){
 document.getElementById('gamesGrid').innerHTML=trendingGames.map((g,idx)=>`
 <div class="game" onclick="openGameDetail(${idx})" style="cursor:pointer">
 <img src="${g.img}" alt="${esc(g.title)}">
@@ -283,47 +288,40 @@ document.getElementById('gamesGrid').innerHTML=trendingGames.map((g,idx)=>`
 </div>`).join('');
 }
 
-function requestAdminAccess() {
+function requestAdminAccess(){
 const pass=prompt('Admin Password එක ඇතුළත් කරන්න:');
-if(pass==='admin123') {
+if(pass==='admin123'){
 document.getElementById('adminBtn').style.display='block';
 alert('Admin අවසරය සාර්ථකයි!');
-} else if(pass!==null) {
-alert('වැරදි මුරපදයක්!');
-}
+}else if(pass!==null){alert('වැරදි මුරපදයක්!');}
 }
 
-function openAdmin() {
+function openAdmin(){
 document.getElementById('adminModal').classList.add('show');
 renderManage();
 }
 
-function closeModal(id) {
+function closeModal(id){
 document.getElementById(id).classList.remove('show');
 }
 
-function addNews() {
+function addNews(){
 const title=document.getElementById('nTitle').value;
 const short=document.getElementById('nShort').value;
-if(!title.trim()||!short.trim()) {
-alert('News Title සහ Short Description දාන්න.');
-return;
-}
+if(!title.trim()||!short.trim()){alert('News Title සහ Short Description දාන්න.');return;}
 news.unshift({
 id:Date.now(),
 category:document.getElementById('nCategory').value,
-title:title,
-short:short,
+title:title,short:short,
 full:document.getElementById('nFull').value||short,
 image:document.getElementById('nImage').value||'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900'
 });
-persist();
-renderNews();
+persist();renderNews();
 ['nTitle','nShort','nFull','nImage'].forEach(id=>document.getElementById(id).value='');
 alert('News එක Publish කළා!');
 }
 
-function renderManage() {
+function renderManage(){
 document.getElementById('manageNews').innerHTML=news.map(n=>`
 <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #26344b">
 <span>${esc(n.title)}</span>
@@ -331,85 +329,86 @@ document.getElementById('manageNews').innerHTML=news.map(n=>`
 </div>`).join('');
 }
 
-function deleteNews(id) {
-if(confirm('මේ News එක මකන්නද?')) {
-news=news.filter(n=>n.id!==id);
-persist();
-renderNews();
+function deleteNews(id){
+if(confirm('මේ News එක මකන්නද?')){
+news=news.filter(n=>n.id!==id);persist();renderNews();
 }
 }
 
-function addEvent() {
+function addEvent(){
 const title=document.getElementById('eTitle').value;
-if(!title.trim()) {
-alert('Event නම දාන්න.');
-return;
-}
+if(!title.trim()){alert('Event නම දාන්න.');return;}
 events.push({
 title:title,
 date:document.getElementById('eDate').value,
 desc:document.getElementById('eDesc').value
 });
-persist();
-renderEvents();
+persist();renderEvents();
 ['eTitle','eDate','eDesc'].forEach(id=>document.getElementById(id).value='');
 alert('Event එක එකතු කළා!');
 }
 
-function renderEvents() {
+function renderEvents(){
 const list=document.getElementById('eventList');
-if(!events.length) {
-list.innerHTML='<p class="muted">දැනට Events නැහැ.</p>';
-return;
-}
+if(!events.length){list.innerHTML='<p class="muted">දැනට Events නැහැ.</p>';return;}
 list.innerHTML=events.map((e,i)=>`
 <div class="event">
 <div class="date">📅<br>${esc(e.date||'TBA')}</div>
-<div style="flex:1">
-<b>${esc(e.title)}</b>
-<p class="muted">${esc(e.desc||'')}</p>
-</div>
+<div style="flex:1"><b>${esc(e.title)}</b><p class="muted">${esc(e.desc||'')}</p></div>
 <button class="dark" onclick="deleteEvent(${i})">✕</button>
 </div>`).join('');
 }
 
-function deleteEvent(index) {
-if(confirm('මේ Event එක මකන්නද?')) {
-events.splice(index,1);
-persist();
-renderEvents();
+function deleteEvent(index){
+if(confirm('මේ Event එක මකන්නද?')){
+events.splice(index,1);persist();renderEvents();
 }
 }
 
-function saveMusic() {
+/* YouTube Music Functions */
+
+function getYouTubeID(url){
+try{
+const u=new URL(url);
+let id='';
+if(u.hostname.includes('youtu.be')){
+id=u.pathname.split('/')[1];
+}else if(u.hostname.includes('youtube.com')){
+if(u.pathname==='/watch')id=u.searchParams.get('v');
+else if(u.pathname.startsWith('/embed/'))id=u.pathname.split('/')[2];
+else if(u.pathname.startsWith('/shorts/'))id=u.pathname.split('/')[2];
+}
+return /^[a-zA-Z0-9_-]{11}$/.test(id||'')?id:null;
+}catch(e){return null;}
+}
+
+function setYouTubePlayer(id,autoplay){
+const player=document.getElementById('youtubePlayer');
+const auto=autoplay?'1':'0';
+player.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay='+auto+'&playsinline=1&rel=0';
+}
+
+function saveMusic(){
 const url=document.getElementById('musicUrl').value.trim();
-if(!url) {
-alert('Music URL එක ඇතුළත් කරන්න.');
-return;
-}
-if(!/^https?:\/\//i.test(url)) {
-alert('නිවැරදි URL එකක් ඇතුළත් කරන්න.');
-return;
-}
-localStorage.setItem('gv_music',url);
-loadMusic();
-alert('Music URL එක Save කළා!');
+const id=getYouTubeID(url);
+if(!id){alert('නිවැරදි YouTube Link එකක් ඇතුළත් කරන්න.');return;}
+localStorage.setItem('gv_music',id);
+setYouTubePlayer(id,false);
+alert('YouTube Music Link එක Save කළා!');
 }
 
-function loadMusic() {
-const url=localStorage.getItem('gv_music');
-const player=document.getElementById('player');
-const hint=document.getElementById('musicHint');
-if(url) {
-player.src=url;
-hint.textContent='Music Player සූදානම්!';
-} else {
-player.removeAttribute('src');
-hint.textContent='Admin Panel එකෙන් MP3 URL එකක් එකතු කරන්න.';
-}
+function loadMusic(){
+const saved=localStorage.getItem('gv_music')||DEFAULT_VIDEO_ID;
+setYouTubePlayer(saved,true);
+document.getElementById('musicHint').textContent='🎵 Music Player සූදානම්!';
 }
 
-function navTo(id,button) {
+function playMusic(){
+const saved=localStorage.getItem('gv_music')||DEFAULT_VIDEO_ID;
+setYouTubePlayer(saved,true);
+}
+
+function navTo(id,button){
 document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 document.querySelectorAll('.bottom nav button').forEach(b=>b.classList.remove('active'));
@@ -417,10 +416,11 @@ if(button)button.classList.add('active');
 if(id==='news')renderNews();
 if(id==='games')renderGames();
 if(id==='events')renderEvents();
+if(id==='music')playMusic();
 window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function goTo(id) {
+function goTo(id){
 const ids=['home','news','games','events','music'];
 const buttons=document.querySelectorAll('.bottom nav button');
 const index=ids.indexOf(id);
