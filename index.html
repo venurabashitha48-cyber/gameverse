@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GameVerse - By Venura Bashitha</title>
+    <title>GameVerse - By Venura</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -43,7 +43,7 @@
 
         header {
             background: linear-gradient(180deg, #0d111a, #06080e);
-            padding: 16px 14px;
+            padding: 18px 14px;
             text-align: center;
             border-bottom: 1px solid rgba(16, 185, 129, 0.3);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
@@ -70,11 +70,11 @@
         }
 
         header h1 {
-            font-size: 19px;
+            font-size: 20px;
             color: #ffffff;
             font-weight: 800;
             letter-spacing: 0.5px;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         header h1 span {
@@ -82,8 +82,9 @@
             text-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
         }
 
+        /* Typing Animation for Venura */
         .typing-container {
-            font-size: 10px;
+            font-size: 11px;
             color: #34d399;
             font-weight: 600;
             white-space: nowrap;
@@ -91,7 +92,7 @@
             border-right: 2px solid #10b981;
             width: 0;
             margin: 0 auto;
-            animation: typing 3.5s steps(30, end) forwards, blink 0.75s step-end infinite;
+            animation: typing 3s steps(25, end) forwards, blink 0.75s step-end infinite;
         }
 
         @keyframes typing {
@@ -131,7 +132,6 @@
             border-left: 3px solid #10b981;
             padding-left: 8px;
             font-weight: 700;
-            letter-spacing: 0.3px;
         }
 
         .card {
@@ -143,22 +143,16 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .phone-mockup-box {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .phone-mockup-box img {
-            width: 64px;
-            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.4));
-        }
-
-        label {
-            font-size: 11px;
+        .badge {
+            background: rgba(16, 185, 129, 0.15);
             color: #34d399;
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 8px;
         }
 
         select, input {
@@ -184,73 +178,6 @@
             width: 100%;
             font-size: 12px;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
-        }
-
-        .badge {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 9px;
-            font-weight: 700;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        .quiz-opt {
-            background: #0e131f;
-            color: white;
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            padding: 11px;
-            margin: 7px 0;
-            width: 100%;
-            border-radius: 10px;
-            text-align: left;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .quiz-opt:hover {
-            background: #10b981;
-            color: #030406;
-        }
-
-        .wallet-card {
-            background: linear-gradient(135deg, #0d1424, #064e3b);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .wallet-info h4 {
-            font-size: 11px;
-            opacity: 0.85;
-            color: #a7f3d0;
-        }
-
-        .wallet-info h2 {
-            font-size: 21px;
-            margin-top: 2px;
-            color: #ffffff;
-            border: none;
-            padding: 0;
-        }
-
-        .withdraw-btn {
-            background: #ffffff;
-            color: #064e3b;
-            border: none;
-            padding: 9px 15px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 11px;
-            cursor: pointer;
         }
 
         nav {
@@ -297,45 +224,40 @@
     <div class="app-container">
         
         <header>
-            <i class="fa-solid fa-robot header-robot"></i>
+            <i class="fa-solid fa-gamepad header-robot"></i>
             <div class="header-center">
                 <h1>Game<span>Verse</span> 🎮</h1>
-                <div class="typing-container">By Venura Bashitha - 2009</div>
+                <div class="typing-container">Created by Venura</div>
             </div>
-            <i class="fa-solid fa-microchip header-robot"></i>
+            <i class="fa-solid fa-bolt header-robot"></i>
         </header>
 
         <div class="content-body">
             
-            <!-- 1. NEWS TAB (GTA VI Updates) -->
+            <!-- NEWS TAB -->
             <div id="tab-news" class="tab-content active">
-                <h2>📰 Gaming Updates (NEW)</h2>
+                <h2>📰 Gaming Updates</h2>
                 
                 <div class="card" style="border-left: 4px solid #f43f5e;">
                     <span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #fb7185; border-color: rgba(244, 63, 94, 0.4);">MEGA UPDATE</span>
-                    <h3 style="font-size: 13px; margin-top: 4px; color:#f8fafc;">🔥 GTA VI නිල නිකුත් කිරීම සහ නවතම තොරතුරු</h3>
+                    <h3 style="font-size: 13px; margin-top: 4px; color:#f8fafc;">🔥 GTA VI නවතම තොරතුරු</h3>
                     <p style="font-size: 11px; color: #9ca3af; margin-top: 6px; line-height: 1.6;">
-                        • Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් (Vice City සහ අවට ප්‍රදේශ) හඳුන්වා දී ඇත.<br>
-                        • ප්‍රධාන චරිත වන Lucia සහ Jason ගේ අපූරු කතා වස්තුව සමඟ අති උසස් Graphics අත්දැකීමක් මෙහි අන්තර්ගත වේ.<br>
-                        • බලාපොරොත්තු වන පරිදි ඉදිරි දිනවලදී මේ පිළිබඳ තවත් විශේෂ Gameplay දර්ශන එළිදැක්වීමට නියමිතයි!
+                        • Rockstar සමාගම විසින් GTA VI ක්‍රීඩාව සඳහා අතිවිශාල ලෝක සිතියමක් (Vice City) සහ Lucia & Jason ප්‍රධාන චරිත හඳුන්වා දී ඇත.<br>
+                        • අති උසස් Graphics සමඟින් ඉදිරියේදී නිකුත් වීමට නියමිතයි!
                     </p>
                 </div>
 
                 <div class="card">
                     <span class="badge">HOT NEWS</span>
                     <h3 style="font-size: 13px; margin-top: 4px; color:#f8fafc;">Free Fire ශ්‍රී ලංකා කුසලානය</h3>
-                    <p style="font-size: 11px; color: #9ca3af; margin-top: 5px; line-height: 1.5;">මෙම මස අවසානයේදී පැවැත්වෙන දැවැන්ත තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි.</p>
+                    <p style="font-size: 11px; color: #9ca3af; margin-top: 5px; line-height: 1.5;">මෙම මස අවසානයේදී පැවැත්වෙන තරගාවලිය සඳහා ලියාපදිංචිය දැන් ක්‍රියාත්මකයි.</p>
                 </div>
             </div>
 
-            <!-- 2. GAME FINDER TAB -->
+            <!-- FINDER TAB -->
             <div id="tab-finder" class="tab-content">
                 <h2>🎮 Phone Game Finder</h2>
                 <div class="card">
-                    <div class="phone-mockup-box">
-                        <img src="https://img.icons8.com/fluency/96/iphone-sparkle.png" alt="Phone Mockup">
-                    </div>
-
                     <label>ඔබේ Phone එකේ RAM ප්‍රමාණය:</label>
                     <select id="ram-val">
                         <option value="2">2 GB RAM (Low-End)</option>
@@ -343,60 +265,18 @@
                         <option value="8">8 GB හෝ වැඩි (Pro/High-End)</option>
                     </select>
 
-                    <label>Processor / Chipset වර්ගය:</label>
-                    <select id="chip-val">
-                        <option value="low">Basic Chipset (Helio G36 / Snapdragon 600 පහළ)</option>
-                        <option value="mid">Good Chipset (Helio G99 / Snapdragon 680/700)</option>
-                        <option value="high">Flagship Chipset (Snapdragon 800+ / Dimensity)</option>
-                    </select>
-
                     <button class="btn" onclick="findGames()">ගැලපෙන Games සොයන්න</button>
                 </div>
                 <div id="finder-results"></div>
             </div>
 
-            <!-- 3. TASKS & WALLET TAB -->
+            <!-- TASKS TAB -->
             <div id="tab-tasks" class="tab-content">
                 <h2>📋 Daily Tasks & Wallet</h2>
-                
-                <div class="wallet-card">
-                    <div class="wallet-info">
-                        <h4>Total Coins</h4>
-                        <h2 id="coin-count">150 Coins</h2>
-                    </div>
-                    <button class="withdraw-btn" onclick="openWithdraw()">Withdraw</button>
-                </div>
-
-                <div class="card">
-                    <h3 style="font-size: 13px; color:#f8fafc;">🔥 Free Fire Headshot Task</h3>
-                    <p style="font-size: 11px; color: #9ca3af; margin: 5px 0;">Classic match එකක Headshot 3ක් ලබා ගන්න.</p>
-                    <span class="badge">+50 Coins</span>
-                    <button class="btn" id="chal-btn" onclick="completeChallenge(this)">Task එක සම්පූර්ණ කළා</button>
-                </div>
-            </div>
-
-            <!-- 4. QUIZ TAB -->
-            <div id="tab-quiz" class="tab-content">
-                <h2>🎯 Gaming Quiz</h2>
-                <div class="card">
-                    <p style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color:#f8fafc;">Free Fire game එකේ මුල්ම Map එක කුමක්ද?</p>
-                    <button class="quiz-opt" onclick="checkQuiz(false)">1. Purgatory</button>
-                    <button class="quiz-opt" onclick="checkQuiz(true)">2. Bermuda</button>
-                    <button class="quiz-opt" onclick="checkQuiz(false)">3. Kalahari</button>
-                    <p id="quiz-res" style="font-size: 11px; margin-top: 8px; font-weight: 600;"></p>
-                </div>
-            </div>
-
-            <!-- 5. LEADERBOARD TAB -->
-            <div id="tab-leaderboard" class="tab-content">
-                <h2>🏆 Global Leaderboard</h2>
-                <div class="card">
-                    <p style="font-size: 11px; margin-bottom: 8px; color:#34d399;">🥇 දවසේ දක්ෂම ක්‍රීඩකයින්:</p>
-                    <ul style="list-style: none; font-size: 11px;">
-                        <li style="padding: 7px 0; border-bottom: 1px solid #131824; display: flex; justify-content: space-between;"><span>1. GamerX_SL</span> <b style="color:#10b981;">1250 pts</b></li>
-                        <li style="padding: 7px 0; border-bottom: 1px solid #131824; display: flex; justify-content: space-between;"><span>2. Viper_99</span> <b style="color:#10b981;">980 pts</b></li>
-                        <li style="padding: 7px 0; display: flex; justify-content: space-between; color: #34d399; font-weight: bold;"><span>3. ඔබ (Venura)</span> <b id="user-score">150 pts</b></li>
-                    </ul>
+                <div class="card" style="text-align: center; padding: 20px;">
+                    <h4 style="font-size: 12px; color: #34d399;">Total Coins</h4>
+                    <h2 style="font-size: 24px; margin: 5px 0; border:none; padding:0;">150 Coins</h2>
+                    <p style="font-size: 11px; color: #9ca3af;">දිනපතා tasks සම්පූර්ණ කර coins එකතු කරගන්න!</p>
                 </div>
             </div>
 
@@ -406,15 +286,11 @@
             <button onclick="switchTab('news')" class="active" id="nav-news"><i class="fa-solid fa-newspaper"></i><span>News</span></button>
             <button onclick="switchTab('finder')" id="nav-finder"><i class="fa-solid fa-gamepad"></i><span>Finder</span></button>
             <button onclick="switchTab('tasks')" id="nav-tasks"><i class="fa-solid fa-fire"></i><span>Tasks</span></button>
-            <button onclick="switchTab('quiz')" id="nav-quiz"><i class="fa-solid fa-brain"></i><span>Quiz</span></button>
-            <button onclick="switchTab('leaderboard')" id="nav-leaderboard"><i class="fa-solid fa-trophy"></i><span>Ranks</span></button>
         </nav>
 
     </div>
 
     <script>
-        let myCoins = 150;
-
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
@@ -424,77 +300,21 @@
 
         function findGames() {
             let ram = document.getElementById('ram-val').value;
-            let chip = document.getElementById('chip-val').value;
             let resDiv = document.getElementById('finder-results');
             
             let html = `<div class="card" style="border-left: 4px solid #10b981;">`;
-            if(ram == "2" || chip == "low") {
-                html += `<h3 style="font-size:12px; color:#34d399;">🟢 Low-End Games (මෙම Phone එකට ඉතා සුදුසුයි):</h3>
-                         <p style="font-size:11px; color:#9ca3af; margin-top:6px; line-height:1.6;">
-                            • Free Fire (Standard)<br>• Subway Surfers<br>• Carrom Pool<br>• Shadow Fight 2<br>• Temple Run 2
-                         </p>`;
-            } else if(ram == "4" && chip == "mid") {
-                html += `<h3 style="font-size:12px; color:#fbbf24;">🟡 Mid-Range Games (මෙම Phone එකට ඉතා සුදුසුයි):</h3>
-                         <p style="font-size:11px; color:#9ca3af; margin-top:6px; line-height:1.6;">
-                            • Free Fire MAX<br>• Call of Duty: Mobile (Low/Med)<br>• PUBG Mobile (Smooth)<br>• eFootball<br>• Mobile Legends
-                         </p>`;
+            if(ram == "2") {
+                html += `<h3 style="font-size:12px; color:#34d399;">🟢 Low-End Games:</h3>
+                         <p style="font-size:11px; color:#9ca3af; margin-top:6px;">• Free Fire<br>• Subway Surfers<br>• Carrom Pool</p>`;
+            } else if(ram == "4") {
+                html += `<h3 style="font-size:12px; color:#fbbf24;">🟡 Mid-Range Games:</h3>
+                         <p style="font-size:11px; color:#9ca3af; margin-top:6px;">• Free Fire MAX<br>• COD Mobile (Low)<br>• PUBG Mobile</p>`;
             } else {
-                html += `<h3 style="font-size:12px; color:#f43f5e;">🔥 High-End / Pro Games (මෙම Phone එකට ඉතා සුදුසුයි):</h3>
-                         <p style="font-size:11px; color:#9ca3af; margin-top:6px; line-height:1.6;">
-                            • CarX Street (High Settings)<br>• Genshin Impact<br>• Warzone Mobile<br>• PUBG Mobile (HDR / Ultra)<br>• Racing Master
-                         </p>`;
+                html += `<h3 style="font-size:12px; color:#f43f5e;">🔥 High-End Games:</h3>
+                         <p style="font-size:11px; color:#9ca3af; margin-top:6px;">• CarX Street<br>• Genshin Impact<br>• Warzone Mobile</p>`;
             }
             html += `</div>`;
             resDiv.innerHTML = html;
-        }
-
-        function completeChallenge(btn) {
-            myCoins += 50;
-            document.getElementById('coin-count').innerText = myCoins + " Coins";
-            document.getElementById('user-score').innerText = myCoins + " pts";
-            btn.innerText = "✔ Completed (+50 Coins)";
-            btn.style.background = "#10b981";
-            btn.style.color = "#030406";
-            btn.disabled = true;
-        }
-
-        function checkQuiz(isCorrect) {
-            let res = document.getElementById('quiz-res');
-            if(isCorrect) {
-                res.style.color = "#10b981";
-                res.innerText = "නිවැරදියි! ඔබට +20 Coins ලැබුණි.";
-                myCoins += 20;
-                document.getElementById('coin-count').innerText = myCoins + " Coins";
-                document.getElementById('user-score').innerText = myCoins + " pts";
-            } else {
-                res.style.color = "#ef4444";
-                res.innerText = "වැරදි පිළිතුරක්! නැවත උත්සාහ කරන්න.";
-            }
-        }
-
-        function openWithdraw() {
-            let amount = prompt("ඔබට විත්ඩ්‍රෝ කිරීමට අවශ්‍ය Coins ප්‍රමාණය ඇතුළත් කරන්න (අවම 100 යි):");
-            if(amount) {
-                let parsedAmount = parseInt(amount);
-                if(parsedAmount <= myCoins && parsedAmount >= 100) {
-                    let phone = prompt("ඔබේ ශ්‍රී ලංකා දුරකථන අංකය ඇතුළත් කරන්න (උදා: 0771234567):");
-                    if(phone && phone.length >= 10) {
-                        let otp = prompt("ඔබේ අංකයට ලැබුණු 4-ඉලක්කම් OTP කෝඩ් එක ඇතුළත් කරන්න:");
-                        if(otp) {
-                            myCoins -= parsedAmount;
-                            document.getElementById('coin-count').innerText = myCoins + ' Coins';
-                            document.getElementById('user-score').innerText = myCoins + ' pts';
-                            alert('🎉 OTP එක තහවුරු විය! ඔබගේ Withdraw ඉල්ලීම සාර්ථකයි. දින 2ක් ඇතුළත රු. 20 ක මුදලක් ඔබගේ අංකයට බැර වේ.');
-                        } else {
-                            alert('OTP කෝඩ් එක ඇතුළත් කර නැත. ඉල්ලීම අවලංගුයි.');
-                        }
-                    } else {
-                        alert('කරුණාකර වලංගු දුරකථන අංකයක් ලබා දෙන්න.');
-                    }
-                } else {
-                    alert('කරුණාකර නිවැරදි ප්‍රමාණයක් ලබා දෙන්න (ඔබ සතුව ප්‍රමාණවත් Coins නැත හෝ අවම සීමාව 100 ට අඩුය).');
-                }
-            }
         }
     </script>
 </body>
